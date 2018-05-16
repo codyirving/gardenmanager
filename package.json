@@ -1,0 +1,14 @@
+{
+  "name": "capstone2",
+  "version": "1.0.0",
+  "description": "Thinkful Capstone #2",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cody I",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
