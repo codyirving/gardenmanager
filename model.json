@@ -1,0 +1,93 @@
+
+
+db.beds.insertOne({"bedNumber":"1","owner":"joe","contact":{"phone":"6195551234","email":"joe@shmo.com"}})
+
+db.gardenbeds.insertMany({
+    "bedNumber":"1",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+},
+{
+    "bedNumber":"2",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+},
+{
+    "bedNumber":"3",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+},
+{
+    "bedNumber":"4",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+},{
+    "bedNumber":"5",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+}
+,{
+    "bedNumber":"6",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+}
+,{
+    "bedNumber":"7",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+}
+,{
+    "bedNumber":"8",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+},
+{
+    "bedNumber":"9",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+},
+{
+    "bedNumber":"10",
+    "owner":"Cody",
+    "contact":{
+        "phoneNumber":"6193393664",
+        "email":"codyi@codyi.net"
+        ,"address":"Cody St. San Diego, CA 92117"
+    }
+})
