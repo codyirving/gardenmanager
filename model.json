@@ -3,7 +3,7 @@
 db.beds.insertOne({"bedNumber":"1","owner":"joe","contact":{"phone":"6195551234","email":"joe@shmo.com"}})
 
 db.gardenbeds.insertMany({
-    "bedNumber":"1",
+    "bedNumber":"11",
     "owner":"Cody",
     "contact":{
         "phoneNumber":"6193393664",

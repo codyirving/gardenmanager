@@ -19,7 +19,7 @@ app.use(showDBRouter);
 
 mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
-const { Beds } = require('./model');
+
 
 
 let server;
