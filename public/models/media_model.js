@@ -10,4 +10,4 @@ const mediaSchema = mongoose.Schema({
 
 const Media = mongoose.model("Media", mediaSchema);
 
-module.exports = {Media,mediaSchema};
+module.exports = {Media};

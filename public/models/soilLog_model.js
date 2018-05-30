@@ -9,4 +9,4 @@ const soilLogSchema = mongoose.Schema({
 
 const SoilLog = mongoose.model('SoilLog',soilLogSchema);
 
-module.exports = {SoilLog, soilLogSchema};
+module.exports = {SoilLog};

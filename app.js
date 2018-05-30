@@ -24,7 +24,7 @@ const { PORT, DATABASE_URL } = require('./config');
 
 let server;
 
-function runServer(databaseUrl, port = PORT) {
+function runServer(databaseUrl = DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {
