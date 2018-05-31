@@ -1,10 +1,11 @@
+'use strict';
+require('dotenv').config();
 var express = require('express');
 const mongoose = require('mongoose');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+
 var showDBRouter = require('./routes/showdb');
 
 var app = express();
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(showDBRouter);
 
+
 mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 
@@ -24,8 +26,10 @@ const { PORT, DATABASE_URL } = require('./config');
 
 let server;
 
-function runServer(databaseUrl = DATABASE_URL, port = PORT) {
+function runServer(databaseUrl, port = PORT) {
+  
   return new Promise((resolve, reject) => {
+    
     mongoose.connect(databaseUrl, err => {
       if (err) {
         console.log("error in runserver db connect");
@@ -36,6 +40,7 @@ function runServer(databaseUrl = DATABASE_URL, port = PORT) {
         resolve();
       })
         .on('error', err => {
+          console.log("runServer error: " + err);
           mongoose.disconnect();
           reject(err);
         });
@@ -57,11 +62,8 @@ function closeServer() {
   });
 }
 
-
-// `closeServer` function is here in original code
-runServer(DATABASE_URL).catch(err => console.error(err));
-
-
-
-
-module.exports = app;
+if (require.main === module) {
+  console.log("require.main === module");
+  runServer(DATABASE_URL).catch(err => console.error(err));
+}
+module.exports = {app, closeServer, runServer};
