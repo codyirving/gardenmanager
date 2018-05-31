@@ -1,4 +1,14 @@
 
+const { Gardenbeds } = require('../public/models/gardenbeds_model');
+const { Plant } = require('../public/models/plant_model');
+const { Notification } = require('../public/models/notifications_model');
+const { Contact } = require('../public/models/contact_model');
+const { Note } = require('../public/models/note_model');
+const { Media } = require('../public/models/media_model');
+const { SoilLog } = require('../public/models/soilLog_model');
+const { BedPosition } = require('../public/models/bedPositions_model');
+
+
 const plant = new Plant({"commonName":"Tomato", "daysToHarvest":"70"});
 const notification = new Notification({"message":"Hi there!"});
 const contact = new Contact({"phoneNumber":"619-555-1234","email":"mark@mark.com","address":"123 New York St. NY NY"});
@@ -108,12 +118,10 @@ const bedsArray = [bed1,bed2,bed3,bed4,bed5,bed6,bed7,bed8,bed9,bed10,bed11,bed1
 
 
 
-// Gardenbeds.insertMany(bedToAdd,function(err) {
-//   console.log("InsertError: " + err)
-// });
-// Gardenbeds.insertMany(bedsArray,function(err) {
-//   console.log("InsertError: " + err);
-// });
+
+Gardenbeds.insertMany(bedsArray,function(err) {
+  console.log("InsertError: " + err);
+});
 
 // Gardenbeds.findOneAndUpdate({"owner": "Cody"}, {$push:{"notifications":n}},
 // function(error,success) {
@@ -147,7 +155,7 @@ const bedsArray = [bed1,bed2,bed3,bed4,bed5,bed6,bed7,bed8,bed9,bed10,bed11,bed1
 
   //const notification = new Notification({"message":req.body.message});
 
-  console.log(`Adding notification to bed \`${req.params.id}\``);
+  //console.log(`Adding notification to bed \`${req.params.id}\``);
 
   // Gardenbeds.findOneAndUpdate({"bedNumber": req.params.id}, {$push:{"notifications":notification}},
   //   function(error,success) {
