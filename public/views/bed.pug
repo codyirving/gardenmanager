@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+  head
+  title PugTest
+
+  link(href='/stylesheets/bed.css', rel='stylesheet')
+body
+  h1 Hi
+  div Owner: #{owner}
+  div Length: #{length} 
+  div Width: #{width}
+  - console.log(typeof contact)
+  - console.log(contact)
+  - const {phoneNumber, email, address} = JSON.parse(contact)
+  - const bedPositionArray = JSON.parse(bedPositions);
+  - console.log(phoneNumber)
+  div Phone: #{phoneNumber}
+  div Email: #{email}
+  each array in bedPositionArray   
+    each row in array 
+      div.flex-container-horizontal
+        each position in row
+          div.flex-container
+            div.plant-position= position.plantType.commonName
+            br

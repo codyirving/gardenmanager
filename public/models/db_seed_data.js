@@ -1,12 +1,13 @@
+console.log("working dir: "+ process.cwd());
 
-const { Gardenbeds } = require('../public/models/gardenbeds_model');
-const { Plant } = require('../public/models/plant_model');
-const { Notification } = require('../public/models/notifications_model');
-const { Contact } = require('../public/models/contact_model');
-const { Note } = require('../public/models/note_model');
-const { Media } = require('../public/models/media_model');
-const { SoilLog } = require('../public/models/soilLog_model');
-const { BedPosition } = require('../public/models/bedPositions_model');
+const { Gardenbeds } = require('./gardenbeds_model');
+const { Plant } = require('./plant_model');
+const { Notification } = require('./notifications_model');
+const { Contact } = require('./contact_model');
+const { Note } = require('./note_model');
+const { Media } = require('./media_model');
+const { SoilLog } = require('./soilLog_model');
+const { BedPosition } = require('./bedPositions_model');
 
 
 const plant = new Plant({"commonName":"Tomato", "daysToHarvest":"70"});

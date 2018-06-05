@@ -40,6 +40,11 @@ gardenbedsSchema.methods.getBedPositions = function () {
         bedPositions: this.bedPositions
     };
 };
+gardenbedsSchema.methods.getBedNotifications = function () {
+    return {
+        notifications: this.notifications
+    };
+};
 gardenbedsSchema.methods.getOwner = function () {
     return {
         owner: this.owner
