@@ -6,7 +6,7 @@ const bedPositionSchema = mongoose.Schema({
     occupied: Boolean,
     plantType: Plant.prototype.schema,
     startDate: {type: Date, default: Date.now},
-    harvestDate: Date
+    harvestDate: {type: Date, default: Date.now}
 });
 
 const BedPosition = mongoose.model('BedPosition',bedPositionSchema);

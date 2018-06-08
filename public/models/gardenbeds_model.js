@@ -32,9 +32,27 @@ gardenbedsSchema.methods.serialize = function () {
         notifications: this.notifications,
         bedPositions: this.bedPositions,
         dateAcquired: this.dateAcquired,
-        soilLog: this.soilLog
+        soilLog: this.soilLog,
+
     };
 };
+
+gardenbedsSchema.methods.getAllBedInfo = function () {
+    return {
+        id: this._id,
+        bedNumber: this.bedNumber,
+        owner: this.owner,
+        contact: this.contact,
+        length: this.length,
+        width: this.width,
+        bedPositions: this.bedPositions,
+        dateAcquired: this.dateAcquired,
+        soilLog: this.soilLog,
+        notifications: this.notifications
+    };
+};
+
+
 gardenbedsSchema.methods.getBedPositions = function () {
     return {
         bedPositions: this.bedPositions

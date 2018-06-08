@@ -4,7 +4,16 @@ html(lang='en')
   title PugTest
   script(type="module" src='https://code.jquery.com/jquery-3.3.1.min.js')
   script(type="module" src='/javascripts/indexScripts.js')
-  link(href='/stylesheets/bed.css', rel='stylesheet')
-body
-  div.row.rowpadding.row1
-  =testvar
+  link(href='/stylesheets/style.css', rel='stylesheet')
+block content
+  .row
+    // register form
+    form(method='POST' action='/notifications/')
+      div.form-group
+        label(for='bednumber') Bed Number:
+        input#name.form-control(type='text', placeholder='message here' name='bednumber')
+      div.form-group 
+        label(for='message') Message:
+        input#name.form-control(type='text', placeholder='message here' name='message')
+
+      button.btn.btn-primary(type='submit') Send Message

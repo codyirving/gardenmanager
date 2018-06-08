@@ -9,7 +9,7 @@ async function generateBeds() {
       if (i % 4 === 0 && row !== 1) $("body").append(`</div>`);
       $(`.row${row}`).append(`
           <div class=\'col-3 bedNumber${i}\'>
-            <a href=\"javascript:generatePositions(${i})\">
+            <a href=\"bed/${i}\">
               <svg width=\"100%\">
                 <rect width=\"100%\" height=\"100%\" fill=\"green\" />
                 <text x=\"20\" y=\"60\" font-family=\"Verdana\" font-size=\"55\" fill=\"white\" stroke=\"black\" stroke-width=\"2\">
@@ -35,53 +35,60 @@ let ownerList = null;
 
 async function getBedOwner(i) {
   if(ownerList === null) ownerList = await getBedOwners();
-  return new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      console.log("resolving: " + ownerList);
-      resolve(JSON.stringify(ownerList[i].owner));
-    }, 10);
+    console.log("Owner: " + ownerList);
+    return new Promise(function(resolve, reject) {
+      if(ownerList != null) resolve(JSON.stringify(ownerList[i].owner));
+      else reject(Error("reejected"));
+    // setTimeout(function() {
+    //   console.log("resolving: " + ownerList);
+    //   resolve(JSON.stringify(ownerList[i].owner));
+    // }, 100);
   });
 }
 
 async function getBedOwners() {
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: `http://localhost:3001/gardeners/`,
-    method: "GET",
-    dataType: "json",
-    processData: false,
-    contentType: false
-  };
-  let ownerList = "";
-  $.ajax(settings).done(response => {
-    
-    console.log("response typeof: " + typeof response);
-    ownerList = response;
-    Array.prototype.forEach.call(response, bed => {
-     //blank
-    });
-    console.log(
-      "typeofMessagesTotal: " +
-        typeof ownerList +
-        "  messages total: " +
-        ownerList
-    );
-  });
+  
   return new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      console.log("resolving: " + ownerList);
-      resolve(ownerList);
-    }, 500);
+
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:3001/gardeners/`,
+      method: "GET",
+      dataType: "json",
+      processData: false,
+      contentType: false
+    };
+    let ownerList = "";
+    $.ajax(settings).done(response => {
+      
+      console.log("response typeof: " + typeof response);
+      ownerList = response;
+      
+      Array.prototype.forEach.call(response, bed => {
+       //blank
+      });
+      console.log(
+        "typeofMessagesTotal: " +
+          typeof ownerList +
+          "  messages total: " +
+          ownerList
+      );
+
+      if(ownerList != undefined) resolve(ownerList);
+      else reject(Error("reejected"));
+
+    });
+
+
+
+    // setTimeout(function() {
+    //   console.log("resolving: " + ownerList);
+    // resolve(ownerList);
+    // }, 500);
   });
 }
-
-
-
-function getBedsInfo() {
-
-}
-
 
 
 function getBedNotifications(bedNumber) {
@@ -166,3 +173,45 @@ function getBedPositions(bedNumber) {
     return response;
   });
 }
+
+
+
+///edit table
+// $('.plant-position').click(function(){
+//   var name = $(this).text();
+//   $(this).html('');
+//   $('<input></input>')
+//       .attr({
+//           'type': 'text',
+//           'name': 'fname',
+//           'id': 'txt_fullname',
+//           'size': '20',
+//           'value': name
+//       })
+//       .appendTo('.plant-position');
+//   $('#txt_fullname').focus();
+// });
+
+// $(document).on('blur','#txt_fullname', function(){
+//   var name = $(this).val();
+//   const position = $(this).parent().data('position-index');
+//   $.ajax({
+//     type: 'post',
+//     url: 'change-name.xhr?name=' + name + "," + position,
+//     success: function(){
+//       $('#fullname').text(name);
+//     }
+//   });
+// });
+///end edit table
+
+// $(document).ready(function() {
+//   $('.plant-position').editable({
+//     url: '/post',
+//     type: 'text',
+//     pk: 1,
+//     name: 'testdiv',
+//     title: 'Enter username'
+// });
+
+// });

@@ -2,24 +2,49 @@ doctype html
 html(lang='en')
   head
   title PugTest
-
+  script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+  script.
+    $.fn.poshytip={defaults:null}
+  script(src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js")
+  script.
+    $.fn.editable.defaults.mode = 'inline';
+  script(src='/javascripts/indexScripts.js')
+  link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css")
   link(href='/stylesheets/bed.css', rel='stylesheet')
 body
-  h1 Hi
-  div Owner: #{owner}
-  div Length: #{length} 
-  div Width: #{width}
-  - console.log(typeof contact)
-  - console.log(contact)
-  - const {phoneNumber, email, address} = JSON.parse(contact)
-  - const bedPositionArray = JSON.parse(bedPositions);
-  - console.log(phoneNumber)
-  div Phone: #{phoneNumber}
-  div Email: #{email}
-  each array in bedPositionArray   
-    each row in array 
-      div.flex-container-horizontal
-        each position in row
-          div.flex-container
-            div.plant-position= position.plantType.commonName
-            br
+- const {phoneNumber, email, address} = JSON.parse(contact);
+- const notificationsArray = JSON.parse(notifications);
+- const soilLogArray = JSON.parse(soilLog);
+- const bedPositionArray = JSON.parse(bedPositions);
+  a.testdiv 
+    p Hi
+  div.row
+    div.col-4
+      div OWNER: #{owner}
+      div Length: #{length} 
+      div Width: #{width}
+      div Phone: #{phoneNumber}
+      div Email: #{email}
+    div.col-4
+      p SOIL LOG:
+      each log in soilLogArray
+        li= log.action
+    div.col-4
+      p NOTIFICATIONS:
+      each note in notificationsArray
+        li= note.message
+  div.row
+    - console.log(typeof contact)
+    - console.log(contact)
+    - console.log(phoneNumber)
+    each array in bedPositionArray   
+      each row, rowindex in array 
+        div.flex-container-horizontal
+          each position, colindex in row
+            div.flex-container
+              - const positionIndex = rowindex + "," + colindex;
+              - const className = 'plant-position ' + positionIndex;
+              - const linkName = bedNumber + "/" + positionIndex;
+              div(class=className data-position-index=positionIndex)
+               a(href=linkName)= position.plantType.commonName
+              br
