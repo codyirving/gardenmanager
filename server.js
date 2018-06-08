@@ -6,9 +6,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var showDBRouter = require('./routes/showdb');
-
-var app = express();
+let showDBRouter = require('./routes/showdb');
+let bedRouter = require('./routes/bed');
+let indexRouter = require('./routes/index');
+let notificationsRouter = require('./routes/notifications');
+let app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,13 +18,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(showDBRouter);
+app.set('view engine', 'pug');
 
+app.use(showDBRouter);
+app.use(bedRouter);
+app.use(indexRouter);
+app.use(notificationsRouter);
 
 mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
-
-
 
 let server;
 

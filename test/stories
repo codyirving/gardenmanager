@@ -1,5 +1,8 @@
-User should be able to view overview of all beds.
-User should be able to view details of single bed.
+Anonymous User should be able to view overview of all beds.
+
+Anonymous User should be able to view details of single bed.
+
+
 Admin should be able to leave note for bed owner.
 Admin should be able to edit owner.
 Bed owner should be able to add/edit details of bed.
