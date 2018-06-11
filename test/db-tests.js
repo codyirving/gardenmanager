@@ -195,6 +195,31 @@ describe('POST a new notification for bed', function() {
         });
     });
 });
+// describe('DELETE a new notification for bed', function() {
+        
+//     before(function () {
+//         return runServer(TEST_DATABASE_URL);
+//     });
+//     after(function () {
+//         return closeServer();
+//     });
+
+//     it('should get position information for bed', function() {
+//         const newNotificationData = {
+//             message: "new notification message"
+//         };
+//         //should I create a new record to delete? or get oid of current record?
+
+//         return chai.request(app)
+//         .post('/bed/1/notifications/')
+//         .send(newNotificationData)
+//         .then(function(res) {
+//             expect(res).to.have.status(201);
+//             expect(res).to.be.json;
+//             expect(res.body.success).to.be.true;
+//         });
+//     });
+// });
 
 //BED POSITIONS ROUTE TESTS
 describe('POST an update to bed position', function() {
