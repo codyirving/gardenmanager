@@ -239,6 +239,7 @@ describe('POST an update to bed position', function() {
         .post('/bed/1/0,0/')
         .send(newBedPositionData)
         .then(function(res) {
+            console.log("POST update bedposition resp: " + JSON.stringify(res));
             expect(res).to.have.status(201);
             expect(res).to.be.json;
             expect(res.body.bedPositions[0][0].occupied).to.be.false;
@@ -265,6 +266,7 @@ describe('POST an update to bed details', function() {
         .post('/bed/1')
         .send(newBedDetailData)
         .then(function(res) {
+            console.log("POST update beddetail resp: " + JSON.stringify(res));
             expect(res).to.have.status(201);
             expect(res).to.be.json;
             expect(res.body.owner).to.eql("Franklin");
