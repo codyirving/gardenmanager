@@ -47,5 +47,21 @@ router.post('/bed/:id/notifications/', jsonParser, (req, res) => {
     );
   
   });
+router.delete('/bed/:bedNumber/notifications/:id', jsonParser, (req,res) => {
+  Gardenbeds.update({"bedNumber":req.params.bedNumber}, { $pull: {"notifications":{"_id":
+  req.params.id}}},
+    function(error,success) {
+      if (error) {
+        console.log("ERROR: " + error);
+        res.status(200).json(error);
+      } else if (success.nModified === 0) {
+        console.log("SUCCESS: " + JSON.stringify(success));
+        return res.status(404).send("Record Not found");
+      } else {
 
+        return res.status(201).send("Successfully Deleted");
+      }
+    }
+  );
+});
   module.exports = router;

@@ -84,8 +84,6 @@ describe('getHome', function() {
     });
 });
 
-
-
 //BED Route Tests
 
 describe('GET all beds in garden', function() {
@@ -197,6 +195,8 @@ describe('POST a new notification for bed', function() {
         });
     });
 });
+
+//BED POSITIONS ROUTE TESTS
 describe('POST an update to bed position', function() {
     before(function () {
         return runServer(TEST_DATABASE_URL);
@@ -204,20 +204,46 @@ describe('POST an update to bed position', function() {
     after(function () {
         return closeServer();
     });
-
-    
-    
+  
     it('update position in bed', function() {
-        const newNotificationData = {
-            occupied: false
+        const newBedPositionData = {
+            occupied: false,
+            startDate: "Jan 1 2003"
         };
         return chai.request(app)
         .post('/bed/1/0,0/')
-        .send(newNotificationData)
+        .send(newBedPositionData)
         .then(function(res) {
             expect(res).to.have.status(201);
             expect(res).to.be.json;
-            expect(res.body.success).to.be.true;
+            expect(res.body.bedPositions[0][0].occupied).to.be.false;
+        });
+    });
+});
+
+//BED DETAILS ROUTE TESTS
+describe('POST an update to bed details', function() {
+    before(function () {
+        return runServer(TEST_DATABASE_URL);
+    });
+    after(function () {
+        return closeServer();
+    });
+  
+    it('update position in bed', function() {
+        const newBedDetailData = {
+            owner: "Franklin",
+            dateAcquired: "Feb 29 1629"
+
+        };
+        return chai.request(app)
+        .post('/bed/1')
+        .send(newBedDetailData)
+        .then(function(res) {
+            expect(res).to.have.status(201);
+            expect(res).to.be.json;
+            expect(res.body.owner).to.eql("Franklin");
+
         });
     });
 });
