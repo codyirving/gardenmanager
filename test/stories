@@ -1,8 +1,22 @@
-Anonymous User should be able to view overview of all beds.
 
+
+
+
+Anonymous User should be able to view overview of all beds.
+test: API endpoint GET /bed
 Anonymous User should be able to view details of single bed.
+test: API endpoint GET /bed/:bedNumber
 
 
 Admin should be able to leave note for bed owner.
+test: API endpoint POST /bed/:bedNumber/notifications/{message}
 Admin should be able to edit owner.
+
+
+Bed owner should be able to view bed plus notifications.
+test: API endpoint GET /bed/:bedNumber/notifications
 Bed owner should be able to add/edit details of bed.
+test: API endpoint POST /bed/:bedNumber/{updatedData}
+Bed owner should be able to edit details of bed positions.
+test: API endpoint POST /bed/:bedNumber/:xpos:ypos/{updatedData}
+Bed owner should be able to delete notifications.

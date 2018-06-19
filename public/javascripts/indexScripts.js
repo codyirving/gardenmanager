@@ -1,15 +1,76 @@
 const testvar = 'hi';
 
+
+
+
+async function getBedsInformation() {
+
+
+  return new Promise(function (resolve, reject) {
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:3001/bed/`,
+      method: "GET",
+      dataType: "json",
+      processData: false,
+      contentType: false
+    };
+    let messages = "";
+    $.ajax(settings).done(response => {
+      resolve(response);
+    });
+
+  });
+}
+
+
+
+
+
+
+
+
+async function updateBedInformation(bedNumber, data) {
+
+  console.log("Data:" + JSON.stringify(data));
+  return new Promise(function (resolve, reject) {
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:3001/bed/${bedNumber}`,
+      method: "POST",
+      dataType: "json",
+      data: data
+
+    };
+   
+    $.ajax(settings).done(response => {
+      resolve(response);
+    });
+
+  });
+}
+
+
+
+
+
+
+
+
 async function generateBeds() {
   try {
-   
+
     const numberOfBeds = 15;
     let row = 1;
     for (i = 1; i <= numberOfBeds; i++) {
       if (i % 4 === 0 && row !== 1) $("body").append(`</div>`);
       $(`.row${row}`).append(`
           <div class=\'col-3 bedNumber${i}\'>
-            <a href=\"bed/${i}\">
+            <a href=\"gardenbed/${i}\">
               <svg width=\"100%\">
                 <rect width=\"100%\" height=\"100%\" fill=\"green\" />
                 <text x=\"20\" y=\"60\" font-family=\"Verdana\" font-size=\"55\" fill=\"white\" stroke=\"black\" stroke-width=\"2\">
@@ -34,11 +95,11 @@ async function generateBeds() {
 let ownerList = null;
 
 async function getBedOwner(i) {
-  if(ownerList === null) ownerList = await getBedOwners();
-    console.log("Owner: " + ownerList);
-    return new Promise(function(resolve, reject) {
-      if(ownerList != null) resolve(JSON.stringify(ownerList[i].owner));
-      else reject(Error("reejected"));
+  if (ownerList === null) ownerList = await getBedOwners();
+  console.log("Owner: " + ownerList);
+  return new Promise(function (resolve, reject) {
+    if (ownerList != null) resolve(JSON.stringify(ownerList[i].owner));
+    else reject(Error("reejected"));
     // setTimeout(function() {
     //   console.log("resolving: " + ownerList);
     //   resolve(JSON.stringify(ownerList[i].owner));
@@ -47,8 +108,8 @@ async function getBedOwner(i) {
 }
 
 async function getBedOwners() {
-  
-  return new Promise(function(resolve, reject) {
+
+  return new Promise(function (resolve, reject) {
 
 
     var settings = {
@@ -62,21 +123,21 @@ async function getBedOwners() {
     };
     let ownerList = "";
     $.ajax(settings).done(response => {
-      
+
       console.log("response typeof: " + typeof response);
       ownerList = response;
-      
+
       Array.prototype.forEach.call(response, bed => {
-       //blank
+        //blank
       });
       console.log(
         "typeofMessagesTotal: " +
-          typeof ownerList +
-          "  messages total: " +
-          ownerList
+        typeof ownerList +
+        "  messages total: " +
+        ownerList
       );
 
-      if(ownerList != undefined) resolve(ownerList);
+      if (ownerList != undefined) resolve(ownerList);
       else reject(Error("reejected"));
 
     });
@@ -91,53 +152,142 @@ async function getBedOwners() {
 }
 
 
-function getBedNotifications(bedNumber) {
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: `http://localhost:3001/notifications/${bedNumber}`,
-    method: "GET",
-    dataType: "json",
-    processData: false,
-    contentType: false
-  };
-  let messages = "";
-  $.ajax(settings).done(response => {
-    messages = `Notifications for bed number ${bedNumber}: `;
-    console.log("response typeof: " + typeof response);
-    Array.prototype.forEach.call(response, notification => {
-      console.log("notification: " + JSON.stringify(notification));
-      console.log("notification typeof: " + typeof notification);
-      notification = notification.notifications;
-      Array.prototype.forEach.call(notification, message => {
+async function getBedNotifications(bedNumber) {
+
+
+  return new Promise(function (resolve, reject) {
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:3001/bed/${bedNumber}/notifications/`,
+      method: "GET",
+      dataType: "json",
+      processData: false,
+      contentType: false
+    };
+    let messages = "";
+    $.ajax(settings).done(response => {
+      messages = `Notifications for bed number ${bedNumber}: <br>`;
+
+      Array.prototype.forEach.call(response.notifications, notification => {
+
+        message = "<li>" + notification.message + "</li>";
         console.log("message: " + message);
-        messages = messages + "\n" + message.message;
+        messages = messages + "\n" + message;
       });
-    });
-    console.log(
-      "typeofMessagesTotal: " +
+      console.log(
+        "typeofMessagesTotal: " +
         typeof messages +
         "  messages total: " +
         messages
-    );
-  });
-  return new Promise(function(resolve, reject) {
-    setTimeout(function() {
+      );
       console.log("resolving: " + messages);
       resolve(messages);
-    }, 100);
+    });
+
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+async function getBedNotes(bedNumber) {
+
+
+  return new Promise(function (resolve, reject) {
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:3001/bed/${bedNumber}/notes/`,
+      method: "GET",
+      dataType: "json",
+      processData: false,
+      contentType: false
+    };
+    let messages = "";
+    $.ajax(settings).done(response => {
+      messages = `Notes for bed number ${bedNumber}: <br>`;
+
+      Array.prototype.forEach.call(response.notes, note => {
+
+        message = "<li>" + note.content + "</li>";
+        console.log("message: " + message);
+        messages = messages + "\n" + message;
+      });
+      console.log(
+        "typeofMessagesTotal: " +
+        typeof messages +
+        "  messages total: " +
+        messages
+      );
+      console.log("resolving: " + messages);
+      resolve(messages);
+    });
+
+  });
+}
+
+
+
+async function getBedSoilLog(bedNumber) {
+
+
+  return new Promise(function (resolve, reject) {
+
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:3001/bed/${bedNumber}/soilLog/`,
+      method: "GET",
+      dataType: "json",
+      processData: false,
+      contentType: false
+    };
+    let messages = "";
+    $.ajax(settings).done(response => {
+      messages = `SoilLog for bed number ${bedNumber}: <br>`;
+
+      Array.prototype.forEach.call(response.soilLog, soilLog => {
+
+        message = "<li>" + soilLog.action + "</li>";
+        console.log("message: " + message);
+        messages = messages + "\n" + message;
+      });
+      console.log(
+        "typeofMessagesTotal: " +
+        typeof messages +
+        "  messages total: " +
+        messages
+      );
+      console.log("resolving: " + messages);
+      resolve(messages);
+    });
+
+  });
+}
+
+
+
+
 function generatePositions(bedNumber) {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3001/bedpositions/${bedNumber}`,
+    url: `http://localhost:3001/bed/${bedNumber}/positions`,
     method: "GET",
     processData: false,
     contentType: false
   };
-  $.ajax(settings).done(function(response) {
+  $.ajax(settings).done(function (response) {
     let title = `Positions for bed number ${bedNumber}: `;
     let htmlResponse = "";
     console.log("response typeof: " + typeof response);
@@ -155,8 +305,8 @@ function generatePositions(bedNumber) {
       console.log("htmlResponse: " + htmlResponse);
       console.log(response);
     });
-    $("body").html("<div class='row'></div>");
-    $(".row").html(htmlResponse);
+    //$("body").html("<div class='row'></div>");
+    $(".row1").html(htmlResponse);
   });
 }
 function getBedPositions(bedNumber) {
@@ -168,11 +318,115 @@ function getBedPositions(bedNumber) {
     processData: false,
     contentType: false
   };
-  $.ajax(settings).done(function(response) {
+  $.ajax(settings).done(function (response) {
     console.log("getBedPositions response: " + response);
     return response;
   });
 }
+
+async function setOwner(bedNumber) {
+  const owner = await getBedOwner(bedNumber);
+  console.log("owner: " + owner);
+  $('.owner').text(owner);
+}
+async function setNotifications(bedNumber) {
+  const messages = await getBedNotifications(bedNumber);
+  console.log("setNotifications to: " + messages);
+  $('.notifications').html(messages);
+}
+async function setNotes(bedNumber) {
+  const notes = await getBedNotes(bedNumber);
+  $('.notes').html(notes);
+}
+async function setSoilLog(bedNumber) {
+  const soilLog = await getBedSoilLog(bedNumber);
+  $('.soil-log').html(soilLog);
+}
+async function setAdminEditor() {
+  const fullList = await getBedsInformation();
+  let html = "";
+  console.log(fullList);
+  fullList.forEach(bed => {
+    console.log("FOREACH:" + bed);
+    html = html + ` <form id="updateform-${bed.bedNumber}" action="javascript:updateDB(${bed.bedNumber})">
+    <div class='row'>
+   
+      <div class='col-4 bedNumber'>
+      
+      ${bed.bedNumber}
+      Owner:<input type="text" name="owner" value="${bed.owner}">
+      </div>
+      <div class='col-4'>
+      Phone:<input type="text" name="phoneNumber" value="${bed.contact.phoneNumber}">
+      </div>
+      <div class='col-4'>
+      E-mail:<input type="text" name="email" value="${bed.contact.email}">
+      </div>
+      </div>
+      <div class='row'>
+      <div class='col-4'>
+      Address:<input type="text" name="address" value="${bed.contact.address}">
+      </div>
+      <div class='col-4'>
+      Bed Length:<input type="text" name="length" maxwidth="2" size="2" value="${bed.length}">
+      Bed Width:<input type="text" name="width" maxwidth="2" size="2" value="${bed.width}">
+      </div>
+      <div class='col-4'>
+      Date Acquired:<input type="text" name="dateAcquired"  value="${bed.dateAcquired}">
+      </div>
+      </div>
+      <div class='row'><input type="submit" name="submit" value="Update"></div>
+      </form>
+      <br>
+      `;
+      
+  });
+  console.log("HTML: " + html);
+  $('body').html(html);
+  
+}
+
+
+
+async function updateDB(bedNumber) {
+  console.log("bed:" + bedNumber);
+  const formID = `#updateform-${bedNumber}`;
+  const formdata = $(formID).serializeArray();
+ 
+
+  var form = new FormData(document.getElementById("updateform-"+bedNumber));
+  var inputValue = form.get("owner");
+
+  const submitJSON = {};
+
+
+
+
+for(var pair of form.entries()) {
+   console.log(pair[0]+ ', '+ pair[1]); 
+
+    submitJSON[pair[0]]= pair[1];
+
+}
+
+let response = await updateBedInformation(bedNumber,submitJSON);
+
+console.log(response);
+
+  console.log("formdata: " + JSON.stringify(formdata));
+
+   console.log("formedata2: " + inputValue);
+  
+
+
+
+
+}
+
+
+
+
+
 
 
 

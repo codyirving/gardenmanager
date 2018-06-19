@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="/javascripts/indexScripts.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+</head>
+
+<body>
+    <div class="row owner-row">
+        <div class="col-4 owner"></div>
+        <div class="col-4 bed-number"></div>
+        <div class="col-4 login">Login:</div>
+    </div>
+    <div class="row information-row">
+        <div class="col-4 notifications"></div>
+        <div class="col-4 notes"></div>
+        <div class="col-4 soil-log"></div>
+    </div>
+    <div class="row rowpadding row1"></div>
+</body>
+
+
+<script>
+
+    const bedNumber = "<%= bedNumber %>";
+    console.log("name: " + name);
+    $('.bed-number').text("Bed #" + bedNumber);
+    setOwner(bedNumber);
+    generatePositions(bedNumber);
+    setNotifications(bedNumber);
+    setNotes(bedNumber);
+    setSoilLog(bedNumber);
+
+    
+</script>
+
+</html>

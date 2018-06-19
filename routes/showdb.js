@@ -31,9 +31,11 @@ router.get('/showdb', function (req, res, next) {
   console.log("lets showdb: " + JSON.stringify(Gardenbeds));
   Gardenbeds.find({}).then(beds => {
     console.log("beds:" + Gardenbeds);
-    res.json({
-      beds: beds.map((currentBed) => currentBed.serialize())
-    });
+
+    res.render('admin.html');
+     
+
+ 
   })
     .catch(err => {
       console.error(err);
@@ -42,7 +44,7 @@ router.get('/showdb', function (req, res, next) {
 });
 
 //get matrix of bed positions
-router.get('/bedpositions/:id', function (req, res) {
+router.get('/bed/:id/positions', function (req, res) {
   Gardenbeds.findOne({ "bedNumber": `${req.params.id}` }).then(
     bed => {
       res.json(

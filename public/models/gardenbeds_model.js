@@ -47,6 +47,8 @@ gardenbedsSchema.methods.getAllBedInfo = function () {
         width: this.width,
         bedPositions: this.bedPositions,
         dateAcquired: this.dateAcquired,
+        notes: this.notes,
+        media: this.media,
         soilLog: this.soilLog,
         notifications: this.notifications
     };
@@ -61,6 +63,21 @@ gardenbedsSchema.methods.getBedPositions = function () {
 gardenbedsSchema.methods.getBedNotifications = function () {
     return {
         notifications: this.notifications
+    };
+};
+gardenbedsSchema.methods.getBedNotes = function () {
+    return {
+        notes: this.notes
+    };
+};
+gardenbedsSchema.methods.getBedMedia = function() {
+    return {
+        media: this.media
+    };
+};
+gardenbedsSchema.methods.getBedSoilLog = function () {
+    return {
+        soilLog: this.soilLog
     };
 };
 gardenbedsSchema.methods.getOwner = function () {

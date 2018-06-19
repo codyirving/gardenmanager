@@ -5,15 +5,12 @@ var path = require('path');
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-let app = express();
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+
 const { Gardenbeds } = require('../public/models/gardenbeds_model');
 
 
 /* GET all beds in garden. */
-router.get('/bed/', function (req, res) {
+router.get('/gardenbed/', function (req, res) {
   Gardenbeds.find({}).then(
     beds => { res.status(200).json(beds); }
   ).catch(err => {
@@ -23,7 +20,7 @@ router.get('/bed/', function (req, res) {
 });
 
 /* GET bed information. */
-router.get('/bed/:id', function (req, res) {
+router.get('/gardenbed/:id', function (req, res) {
   const bedNumber = req.params.id;
   Gardenbeds.findOne({ "bedNumber": `${bedNumber}` }).then(
     bed => {
@@ -162,7 +159,8 @@ router.post('/bed/:id/', jsonParser, (req, res) => {
  let jsonSetObject = {};
  for (let i = 0; i < intersected.length; i++) {
    const field = intersected[i];
-
+   //look for passed field to update
+   console.log("if " + field + " in " + req.body);
    if ((field in req.body)) {
      //found at least one
      found = true;

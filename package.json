@@ -8,14 +8,20 @@
     "test": "mocha --exit"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "chai-http": "^4.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
+    "ejs": "^2.6.1",
     "express": "~4.16.0",
+    "jsonwebtoken": "^8.3.0",
     "mongodb": "^3.1.0-beta4",
-    "mongoose": "^5.1.4",
+    "mongoose": "^5.1.5",
     "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "pug": "^2.0.3"
   },
   "devDependencies": {

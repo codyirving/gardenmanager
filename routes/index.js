@@ -5,8 +5,8 @@ var path = require('path');
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render(path.resolve('public/views/index'), { title: 'Express@?' });
+router.get('/gtest/:id', function(req, res, next) {
+  res.render('garden.html', {bedNumber:req.params.id});
 });
 
 
