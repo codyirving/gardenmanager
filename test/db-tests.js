@@ -174,7 +174,7 @@ describe('test endpoints', function () {
     //BED DETAILS ROUTE TESTS
     describe('POST an update to bed details', function () {
 
-        it('update position in bed', function () {
+        it('update details in bed', function () {
             const newBedDetailData = {
                 owner: "Franklin",
                 dateAcquired: "Feb 29 1629"
@@ -184,7 +184,7 @@ describe('test endpoints', function () {
                 .post('/bed/1')
                 .send(newBedDetailData)
                 .then(function (res) {
-                    console.log("POST update beddetail resp: " + JSON.stringify(res));
+                    console.log("POST update beddetail resp: " + JSON.stringify(res) + "  END #############");
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
                     expect(res.body.owner).to.eql("Franklin");
