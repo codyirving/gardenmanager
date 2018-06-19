@@ -2,3 +2,17 @@ language: node_js
 node_js:
   - "9"
 services: mongodb
+sudo: false
+addons:
+  apt:
+    sources:
+      - mongodb-upstart
+      - mongodb-3.6.4-precise
+    packages:
+      - mongodb-org-server
+      - mongodb-org-shell
+
+before_script:
+  - sleep 15
+
+after_script: "npm run coveralls"
