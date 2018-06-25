@@ -29,6 +29,7 @@
   }
   body {
       line-height: 1;
+      background-color: darkkhaki;
   }
   ol, ul {
       list-style: none;
@@ -48,7 +49,6 @@
   
   
   body {
-    
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   }
   
@@ -64,25 +64,39 @@
     margin: 1px;
   }
   
-  [class*="bedNumber"] {
+  [class*="owner"] {
     height: auto;
-
     color: blue;
     font-size: 16px;
   }
   
   
-  
+  .mdl-card__title-text {
+    font-size: 44px;
+  }
   
   
   .rowpadding {
     padding-top: 5px;
   }
+  .update-button {
+    padding: 5px;
+  }
 
 
 
-
-
+  .demo-card-wide.mdl-card {
+    /* max-width: 800px; */
+  }
+  .demo-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background: url('../images/garden_photo_long.jpg') center / cover;
+    background-color: aliceblue;
+  }
+  .demo-card-wide > .mdl-card__menu {
+    color: #fff;
+  }
 
 
 
@@ -107,7 +121,8 @@
     padding-left: 20px;
     padding-right: 20px;
     margin: 0 auto;
-    background-color: gainsboro;
+    /* background-color: gainsboro; */
+    /* height: 24px; */
   }
   /* Clearfix */
   .row::before,
@@ -130,8 +145,8 @@
      * Half a gutter is 10px, 10/960 (context) = 1.041666%
      *
      */
-    padding-left: 1.04166666%;
-    padding-right: 1.04166666%;
+    /* padding-left: 1.04166666%; */
+    /* padding-right: 1.04166666%; */
   }
   /* Mobile defaults */
   .col-2point4,

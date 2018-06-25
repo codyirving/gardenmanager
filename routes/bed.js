@@ -1,7 +1,20 @@
 var express = require('express');
-var router = express.Router();
+const mongoose = require('mongoose');
 var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
+const router = express.Router();
+const { Gardenbeds } = require('../public/models/gardenbeds_model');
+// const { Plant } = require('../public/models/plant_model');
+// const { Notification } = require('../public/models/notifications_model');
+// const { Contact } = require('../public/models/contact_model');
+// const { Note } = require('../public/models/note_model');
+// const { Media } = require('../public/models/media_model');
+// const { SoilLog } = require('../public/models/soilLog_model');
+// const { BedPosition } = require('../public/models/bedPositions_model');
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
@@ -9,7 +22,41 @@ let app = express();
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-const { Gardenbeds } = require('../public/models/gardenbeds_model');
+
+router.use(logger('dev'));
+router.use(express.json());
+router.use(express.urlencoded({ extended: false }));
+router.use(cookieParser());
+router.use(express.static(path.join(__dirname, 'public')));
+
+
+mongoose.Promise = global.Promise;
+
+
+const { router: usersRouter } = require('../users');
+const { router: authRouter, localStrategy, jwtStrategy } = require('../auth');
+
+
+router.use('/api/users/', usersRouter);
+router.use('/api/auth/', authRouter);
+
+
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+//   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+//   if (req.method === 'OPTIONS') {
+//     return res.send(204);
+//   }
+//   next();
+// });
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
 
 
 /* GET all beds in garden. */
@@ -80,7 +127,7 @@ router.get('/bed/:id/:position1,:position2', function (req, res) {
 router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
   let found = false;
 
-  const requiredFields = ['startDate', 'occupied', 'plantType', 'harvestDate'];
+  const requiredFields = ['startDate', 'occupied', 'commonName', 'harvestDate'];
 
   console.log("req.body.keys: " + Object.keys(req.body));
   //check req.body for any of required keys
@@ -91,14 +138,28 @@ router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
   for (let i = 0; i < intersected.length; i++) {
     const field = intersected[i];
     //look for passed field to update
-    console.log("if " + field + " in " + req.body);
+    //console.log("if " + field + " in " + req.body);
+
+
     if ((field in req.body)) {
+      
       //found at least one
       found = true;
-      const setString = "bedPositions." + req.params.pos1 + "." + req.params.pos2 + "." + field;
+      let setString;
+      if(field === 'commonName') {
+        //! HACKITY HACK?
+        setString = "bedPositions." + req.params.pos1 + "." + req.params.pos2 + ".plantType." + field;
+      }else {
+        setString = "bedPositions." + req.params.pos1 + "." + req.params.pos2 + "." + field;
+      }
+      
       //set the key value
       jsonSetObject[setString] = req.body[field];
       console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
+
+      //!SET NESTED PLANT OBJECT DATA -- commonName 
+
+
 
     }
   }
@@ -138,10 +199,26 @@ router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
 
 
 });
-/* POST update to bed details */
-router.post('/bed/:id/', jsonParser, (req, res) => {
-  let found = false;
 
+
+router.post('/bed/:id/', jsonParser, (req, res, next) => {
+  let found = false;
+  let token = req.cookies.authToken;
+  console.log("TOKEN from cookie: " + token);
+  console.log("TOKEN from req.cookies: " + JSON.stringify(req.query));
+  //change to second secret to pass test.
+  //let decoded = jwt.verify(token, 'notsecretatall');
+  //console.log("Decoded token:  " + JSON.stringify(decoded));
+  try {
+    
+    let decoded = jwt.verify(token, 'notsecretatall');
+    console.log("Decoded token:  " + JSON.stringify(decoded));
+
+  } catch(err) {
+    console.log("ERROR DECODING");
+    return res.status('401').send("unauthorized");
+   
+  }
   const requiredFields = [
     'length',
     'width',
@@ -151,7 +228,7 @@ router.post('/bed/:id/', jsonParser, (req, res) => {
     'notes',
     'dateAcquired'
   ];
-
+  console.log("req body: " + JSON.stringify(req.body));
   console.log("req.body.keys: " + Object.keys(req.body));
   //check req.body for any of required keys
   const intersected = intersect(requiredFields, Object.keys(req.body));
@@ -186,7 +263,8 @@ router.post('/bed/:id/', jsonParser, (req, res) => {
 
  ).then(success => {
    if (success) {
-     console.log("SUCCESS: " + success.bedPositions[0][0]);
+     console.log("SUCCESS: " + success);
+
      return res.status(201).json(success);
    } else {
      console.log("failed " + success);
@@ -203,8 +281,6 @@ router.post('/bed/:id/', jsonParser, (req, res) => {
 
 
 });
-
-
 
 
 function intersect(a, b) {

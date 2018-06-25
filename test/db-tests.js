@@ -4,7 +4,8 @@ const { app, closeServer, runServer } = require('../server');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
-const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 chai.use(chaiHttp);
 
 console.log("\n\n TEST_DATABASE_URL: " + JSON.stringify(TEST_DATABASE_URL));
@@ -180,8 +181,23 @@ describe('test endpoints', function () {
                 dateAcquired: "Feb 29 1629"
 
             };
+            const user = {"username":"cody",
+            "password":"1234567890"
+            };
+            const createAuthToken = function(user) {
+                return jwt.sign({user}, config.JWT_SECRET, {
+                  subject: user.username,
+                  expiresIn: config.JWT_EXPIRY,
+                  algorithm: 'HS256'
+                });
+              };
+
+            const authToken = createAuthToken((user));
+
+
             return chai.request(app)
                 .post('/bed/1')
+                .set('Cookie', `authToken=${authToken}`)
                 .send(newBedDetailData)
                 .then(function (res) {
                     console.log("POST update beddetail resp: " + JSON.stringify(res.body) + "  END #############");

@@ -26,22 +26,7 @@ router.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.Promise = global.Promise;
 
-//!shows all db info -- dangerous
-router.get('/showdb', function (req, res, next) {
-  console.log("lets showdb: " + JSON.stringify(Gardenbeds));
-  Gardenbeds.find({}).then(beds => {
-    console.log("beds:" + Gardenbeds);
 
-    res.render('admin.html');
-     
-
- 
-  })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ message: "Internal server error" });
-    });
-});
 
 //get matrix of bed positions
 router.get('/bed/:id/positions', function (req, res) {

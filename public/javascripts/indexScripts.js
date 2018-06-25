@@ -35,19 +35,24 @@ async function getBedsInformation() {
 async function updateBedInformation(bedNumber, data) {
 
   console.log("Data:" + JSON.stringify(data));
+  console.log("authToken: " + document.cookie.authToken);
   return new Promise(function (resolve, reject) {
-
     var settings = {
       async: true,
-      crossDomain: true,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', `Bearer ${document.cookie.authToken}`);
+      },
       url: `http://localhost:3001/bed/${bedNumber}`,
       method: "POST",
       dataType: "json",
       data: data
-
     };
-   
+
     $.ajax(settings).done(response => {
+
+
+      alert(JSON.stringify(response));
+      console.log("response: " + response);
       resolve(response);
     });
 
@@ -98,7 +103,7 @@ async function getBedOwner(i) {
   if (ownerList === null) ownerList = await getBedOwners();
   console.log("Owner: " + ownerList);
   return new Promise(function (resolve, reject) {
-    if (ownerList != null) resolve(JSON.stringify(ownerList[i].owner));
+    if (ownerList != null) resolve((ownerList[i - 1].owner));
     else reject(Error("reejected"));
     // setTimeout(function() {
     //   console.log("resolving: " + ownerList);
@@ -168,7 +173,7 @@ async function getBedNotifications(bedNumber) {
     };
     let messages = "";
     $.ajax(settings).done(response => {
-      messages = `Notifications for bed number ${bedNumber}: <br>`;
+      messages;
 
       Array.prototype.forEach.call(response.notifications, notification => {
 
@@ -215,7 +220,7 @@ async function getBedNotes(bedNumber) {
     };
     let messages = "";
     $.ajax(settings).done(response => {
-      messages = `Notes for bed number ${bedNumber}: <br>`;
+      messages;
 
       Array.prototype.forEach.call(response.notes, note => {
 
@@ -254,7 +259,7 @@ async function getBedSoilLog(bedNumber) {
     };
     let messages = "";
     $.ajax(settings).done(response => {
-      messages = `SoilLog for bed number ${bedNumber}: <br>`;
+      messages;
 
       Array.prototype.forEach.call(response.soilLog, soilLog => {
 
@@ -297,9 +302,14 @@ function generatePositions(bedNumber) {
       console.log("notification typeof: " + typeof row);
 
       Array.prototype.forEach.call(row, (position, index2) => {
-        htmlResponse += `<div class=\'col-2point4 plant-position\'>
-          ${position.plantType.commonName}<br>
-          [ ${index1},${index2} ]
+        htmlResponse += `<div class=\'col-2point4 plant-position demo-card-square mdl-card mdl-shadow--2dp\'>
+         
+        <div class="mdl-card__title mdl-card--expand">
+        <h2 class="mdl-card__title-text">${position.plantType.commonName}</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="/gardener/${bedNumber}/edit/${index1},${index2}"><i class="material-icons">more_vert</i></a>
+        </div>
           </div>`;
       });
       console.log("htmlResponse: " + htmlResponse);
@@ -348,42 +358,52 @@ async function setAdminEditor() {
   console.log(fullList);
   fullList.forEach(bed => {
     console.log("FOREACH:" + bed);
-    html = html + ` <form id="updateform-${bed.bedNumber}" action="javascript:updateDB(${bed.bedNumber})">
-    <div class='row'>
-   
-      <div class='col-4 bedNumber'>
+    html = html + ` <form class="row" id="updateform-${bed.bedNumber}" action="javascript:updateDB(${bed.bedNumber})">
+    <div class="col-12 demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Bed #${bed.bedNumber}</h2>
+  </div>
+  <div class="row">
+    <div class='col-6 mdl-card__supporting-text'>
+    
+      <div class='row owner'>
       
-      ${bed.bedNumber}
+      
       Owner:<input type="text" name="owner" value="${bed.owner}">
       </div>
-      <div class='col-4'>
+      <div class='row'>
       Phone:<input type="text" name="phoneNumber" value="${bed.contact.phoneNumber}">
       </div>
-      <div class='col-4'>
+      <div class='row'>
       E-mail:<input type="text" name="email" value="${bed.contact.email}">
       </div>
       </div>
+
+    <div class='col-6 mdl-card__supporting-text'>
       <div class='row'>
-      <div class='col-4'>
       Address:<input type="text" name="address" value="${bed.contact.address}">
       </div>
-      <div class='col-4'>
+      <div class='row'>
       Bed Length:<input type="text" name="length" maxwidth="2" size="2" value="${bed.length}">
       Bed Width:<input type="text" name="width" maxwidth="2" size="2" value="${bed.width}">
       </div>
-      <div class='col-4'>
+      <div class='row'>
       Date Acquired:<input type="text" name="dateAcquired"  value="${bed.dateAcquired}">
       </div>
       </div>
-      <div class='row'><input type="submit" name="submit" value="Update"></div>
+
+      <div class='col-12 update-button'><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" name="submit" value="Update"></div>
+      <br>
+      </div>
+      </div>
       </form>
       <br>
       `;
-      
+
   });
   console.log("HTML: " + html);
   $('body').html(html);
-  
+
 }
 
 
@@ -392,9 +412,9 @@ async function updateDB(bedNumber) {
   console.log("bed:" + bedNumber);
   const formID = `#updateform-${bedNumber}`;
   const formdata = $(formID).serializeArray();
- 
 
-  var form = new FormData(document.getElementById("updateform-"+bedNumber));
+
+  var form = new FormData(document.getElementById("updateform-" + bedNumber));
   var inputValue = form.get("owner");
 
   const submitJSON = {};
@@ -402,26 +422,233 @@ async function updateDB(bedNumber) {
 
 
 
-for(var pair of form.entries()) {
-   console.log(pair[0]+ ', '+ pair[1]); 
+  for (var pair of form.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+    submitJSON[pair[0]] = pair[1];
+  }
 
-    submitJSON[pair[0]]= pair[1];
+  let response = await updateBedInformation(bedNumber, submitJSON);
+
+  console.log(response);
+  console.log("formdata: " + JSON.stringify(formdata));
+  console.log("formedata2: " + inputValue);
 
 }
 
-let response = await updateBedInformation(bedNumber,submitJSON);
+async function login() {
+  const formID = `loginform`;
+  formData = new FormData(document.getElementById(formID));
 
-console.log(response);
 
-  console.log("formdata: " + JSON.stringify(formdata));
 
-   console.log("formedata2: " + inputValue);
+
+  const submitJSON = {};
+
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+    submitJSON[pair[0]] = pair[1];
+  }
+  //sets cookie
+  const token = await getToken(submitJSON);
+  console.log("TOKEN: " + token);
+  window.location.href = "/admin/dashboard/";
+
+
+}
+
+
+function loadAdmin(token) {
+
+  $.ajax({
+    url: '/admin/dashboard',
+    type: 'GET',
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    },
+    data: {},
+    error: function () { },
+  }).done(response => {
+    jQuery('body').html(response);
+  });
+
+
+}
+
+
+
+async function getToken(data) {
+
+  console.log("Data:" + JSON.stringify(data));
+  return new Promise(function (resolve, reject) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+
+
+    var settings = {
+      mode: 'same-origin',
+      redirect: 'follow',
+      crossDomain: true,
+      credentials: 'include',
+      withCredentials: true,
+      url: `http://localhost:3001/api/auth/login`,
+      headers: headers,
+      method: "POST",
+      dataType: "json",
+      data: data
+    };
+
+    $.ajax(settings).done(response => {
+
+      resolve(response);
+    });
+
+  });
+}
+
+function getPositionInfo(bedNumber, posX, posY) {
+  return new Promise(function (resolve, reject) {
+    var settings = {
+      async: true,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', `Bearer ${document.cookie.authToken}`);
+      },
+      url: `http://localhost:3001/bed/${bedNumber}/${posX},${posY}`,
+      method: "GET",
+      dataType: "json"
+    };
+
+    $.ajax(settings).done(response => {
+      
+
+      console.log("response: " + response);
+      resolve(response);
+    });
+
+  });
+}
+
+
+
+async function setEditPosition(bedNumber, posX, posY) {
+  const positionInfo = await getPositionInfo(bedNumber, posX, posY);
+  console.log("pos info " + positionInfo);
+
+
+  let html = ` <form class="row" id="editposition-${bedNumber}" action="javascript:updatePOS(${bedNumber},${posX},${posY})">
+  <div class="col-12 demo-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
+  <h2 class="mdl-card__title-text">Bed #${bedNumber} Position ${posX},${posY}</h2>
+</div>
+<div class="row">
+  <div class='col-6 mdl-card__supporting-text'>
+  
+    <div class='row'>
+    
+    
+    Start Date:<input type="text" name="startDate" value="${positionInfo.startDate}">
+    </div>
+    <div class='row'>
+    Harvest Date:<input type="text" name="harvestDate" value="${positionInfo.harvestDate}">
+    </div>
+    <div class='row'>
+    Occupied:<input type="radio" id="true" name="occupied" value="true"><label for="true">TRUE</label><input type="radio" id="false" name="occupied" value="false"><label for="false">FALSE</label>
+    </div>
+    </div>
+
+  <div class='col-6 mdl-card__supporting-text'>
+    <div class='row'>
+    Plant:<input type="text" name="commonName" value="${positionInfo.plantType.commonName}">
+    </div>
+    </div>
+
+    <div class='col-12 update-button'><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" name="submit" value="Update"></div>
+    <br>
+    </div>
+    </div>
+    </form>
+    <br>
+    `;
+
+
+
+
+
   
 
-
-
-
+  $('.position').html(html);
+  if(positionInfo.occupied === true) {
+    $('#true').prop("checked",true);
+  }else $('#false').prop("checked",true);
 }
+
+
+
+
+
+async function updatePOS(bedNumber,posX,posY) {
+
+  console.log("bed:" + bedNumber);
+
+  //const formID = `#editposition-${bedNumber}`;
+  //const formdata = $(formID).serializeArray();
+
+
+  var form = new FormData(document.getElementById("editposition-" + bedNumber));
+  var inputValue = form.get("owner");
+  console.log("inputValue" + inputValue);
+  const submitJSON = {};
+
+
+
+
+  for (var pair of form.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+    submitJSON[pair[0]] = pair[1];
+  }
+
+  let response = await updatePositionInformation(bedNumber, submitJSON, posX, posY);
+
+  console.log(response);
+  
+ 
+}
+
+
+
+
+
+
+function updatePositionInformation(bedNumber, data, posX, posY) {
+
+  console.log("Data:" + JSON.stringify(data));
+  console.log("authToken: " + document.cookie.authToken);
+  return new Promise(function (resolve, reject) {
+    var settings = {
+      async: true,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', `Bearer ${document.cookie.authToken}`);
+      },
+      url: `http://localhost:3001/bed/${bedNumber}/${posX},${posY}`,
+      method: "POST",
+      dataType: "json",
+      data: data
+    };
+
+    $.ajax(settings).done(response => {
+
+
+      alert(JSON.stringify(response));
+      console.log("response: " + response);
+      resolve(response);
+    });
+
+  });
+}
+
+
+
+
 
 
 

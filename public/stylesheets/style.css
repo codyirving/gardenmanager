@@ -57,8 +57,8 @@ a {
 }
 
 .plant-position {
-  text-align: center;
-  height: 100px;
+  /* text-align: center; */
+  /* height: 100px; */
   background-color: lightgreen;
   border: 1px solid black;
   margin: 1px;
@@ -67,15 +67,39 @@ a {
 [class*="bedNumber"] {
   height: auto;
   text-align:  center;
+}
 
+
+.owner-row {
+  height: 40px;
+  background-color: whitesmoke;
+  text-align: center;
+  font-size: 26px;
 }
 
 
 
+.notifications {
+  background-color: lightskyblue;
+}
+.notes {
+  background-color: lightgray;
+}
+.soil-log {background-color:  sandybrown;}
 
+
+.demo-card-square.mdl-card {
+  /* width: 158px; */
+  /* height: 105px; */
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background-color: green;
+}
 
 .rowpadding {
   padding-top: 5px;
+  /* margin-left: 20px; */
 }
 /*********************/
 /* START GRID SYSTEM */
@@ -86,7 +110,7 @@ a {
   padding-left: 20px;
   padding-right: 20px;
   margin: 0 auto;
-  height: 61px;
+  /* height: 61px; */
 }
 /* Clearfix */
 .row::before,
@@ -109,8 +133,8 @@ a {
    * Half a gutter is 10px, 10/960 (context) = 1.041666%
    *
    */
-  padding-left: 1.04166666%;
-  padding-right: 1.04166666%;
+  /* padding-left: 1.04166666%; */
+  /* padding-right: 1.04166666%; */
 }
 /* Mobile defaults */
 .col-2point4,
@@ -124,7 +148,7 @@ a {
 @media only screen and (min-width: 800px) {
   /* 3 columns, 3/12 in % */
   .col-2point4 {
-    width: 19%;
+    width: 19.79%;
   }
   .col-3 {
     width: 25%;
