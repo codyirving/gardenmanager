@@ -142,17 +142,21 @@ router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
 
 
     if ((field in req.body)) {
-      
+
       //found at least one
       found = true;
+
+
+
       let setString;
-      if(field === 'commonName') {
-        //! HACKITY HACK?
+
+      if (field === 'commonName') {
+        //!  HACK?
         setString = "bedPositions." + req.params.pos1 + "." + req.params.pos2 + ".plantType." + field;
-      }else {
+      } else {
         setString = "bedPositions." + req.params.pos1 + "." + req.params.pos2 + "." + field;
       }
-      
+
       //set the key value
       jsonSetObject[setString] = req.body[field];
       console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
@@ -210,14 +214,14 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
   //let decoded = jwt.verify(token, 'notsecretatall');
   //console.log("Decoded token:  " + JSON.stringify(decoded));
   try {
-    
+
     let decoded = jwt.verify(token, 'notsecretatall');
     console.log("Decoded token:  " + JSON.stringify(decoded));
 
-  } catch(err) {
+  } catch (err) {
     console.log("ERROR DECODING");
     return res.status('401').send("unauthorized");
-   
+
   }
   const requiredFields = [
     'length',
@@ -226,7 +230,8 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
     'owner',
     'contact',
     'notes',
-    'dateAcquired'
+    'dateAcquired',
+    'address'
   ];
   console.log("req body: " + JSON.stringify(req.body));
   console.log("req.body.keys: " + Object.keys(req.body));
@@ -235,49 +240,62 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
 
   console.log("Intersected: " + intersected);
 
- //MONGODB $set object
- let jsonSetObject = {};
- for (let i = 0; i < intersected.length; i++) {
-   const field = intersected[i];
+  //MONGODB $set object
+  let jsonSetObject = {};
+  for (let i = 0; i < intersected.length; i++) {
+    const field = intersected[i];
+    let setString;
+    if ((field in req.body)) {
+      //found at least one
+      found = true;
+      setString = field;
+      //! check for fields that are nested?
+      if (field === 'address') {
+        //!  HACK?
+        setString = "contact." + field;
+      }
 
-   if ((field in req.body)) {
-     //found at least one
-     found = true;
-     const setString = field;
-     //set the key value
-     jsonSetObject[setString] = req.body[field];
-     console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
-   }
- }
- if (!found) {
-   //none!
-   const message = `Missing \`${requiredFields}\` in request body`;
-   console.error(message);
-   return res.status(400).send(message);
- }
 
- Gardenbeds.findOneAndUpdate(
-   { "bedNumber": req.params.id },
-   { "$set": jsonSetObject },
-   { "returnNewDocument": true }
 
- ).then(success => {
-   if (success) {
-     console.log("SUCCESS: " + success);
 
-     return res.status(201).json(success);
-   } else {
-     console.log("failed " + success);
-     return res.status(200).json(error);
-   }
- }).catch(error => {
-   if (error) {
-     console.log("ERROR: " + error);
-     return res.status(200).json(error);
-   }
-   console.error(err);
-   res.status(500).json({ message: "Internal server error" });
- });
+
+
+
+
+      //set the key value
+      jsonSetObject[setString] = req.body[field];
+      console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
+    }
+  }
+  if (!found) {
+    //none!
+    const message = `Missing \`${requiredFields}\` in request body`;
+    console.error(message);
+    return res.status(400).send(message);
+  }
+
+  Gardenbeds.findOneAndUpdate(
+    { "bedNumber": req.params.id },
+    { "$set": jsonSetObject },
+    { "returnNewDocument": true }
+
+  ).then(success => {
+    if (success) {
+      console.log("SUCCESS: " + success);
+
+      return res.status(201).json(success);
+    } else {
+      console.log("failed " + success);
+      return res.status(200).json(error);
+    }
+  }).catch(error => {
+    if (error) {
+      console.log("ERROR: " + error);
+      return res.status(200).json(error);
+    }
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  });
 
 
 });

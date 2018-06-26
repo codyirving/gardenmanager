@@ -1,0 +1,61 @@
+<form class="row" id="updateform-${bed.bedNumber}" action="javascript:updateDB(${bed.bedNumber})">
+    <div class="col-12 demo-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Bed #${bed.bedNumber}</h2>
+        </div>
+        <div class="row">
+            <div class='col-6 mdl-card__supporting-text'>
+
+                <div class='row'>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="owner" id="owner">
+                        <label class="mdl-textfield__label" for="owner">${bed.owner}</label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="phoneNumber" id="phoneNumber" value="${bed.contact.phoneNumber}">
+                        <label class="mdl-textfield__label" for="phoneNumber">${bed.phoneNumber}</label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    E-mail:
+                    <input type="text" name="email" value="${bed.contact.email}">
+                </div>
+                
+            </div>
+
+            <div class='col-6 mdl-card__supporting-text'>
+                <div class='row'>
+                    Address:
+                    <input type="text" name="address" value="${bed.contact.address}">
+                </div>
+                <div class='row'>
+                    Bed Length:
+                    <input type="text" name="length" maxwidth="2" size="2" value="${bed.length}"> Bed Width:
+                    <input type="text" name="width" maxwidth="2" size="2" value="${bed.width}">
+                </div>
+                <div class='row'>
+                    Date Acquired:
+                    <input type="text" name="dateAcquired" value="${bed.dateAcquired}">
+                </div>
+            </div>
+
+            <div class='col-6 update-button'>
+                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit"
+                    name="submit" value="Update">
+            </div>
+
+
+            <br>
+        </div>
+    </div>
+</form>
+<div class='row'>
+    <div class='col-6 send-notification-button'>
+        <button onclick="javascript:sendNotification(${bed.bedNumber});" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Send Notification</button>
+    </div>
+</div>
+<br>

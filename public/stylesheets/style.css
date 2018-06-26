@@ -87,6 +87,9 @@ a {
 }
 .soil-log {background-color:  sandybrown;}
 
+.unoccupied {
+  background-color: gainsboro;
+}
 
 .demo-card-square.mdl-card {
   /* width: 158px; */
