@@ -10,6 +10,15 @@ router.get('/gardener/:id', function(req, res, next) {
 });
 
 
+
+router.get('/', function(req, res, next) {
+  res.render('index.html');
+});
+
+
+
+
+
 /* GET position edit page. */
 router.get('/gardener/:id/edit/:posX,:posY', function(req, res, next) {
   console.log("gettine edit page");

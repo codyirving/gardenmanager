@@ -36,10 +36,9 @@ async function updateBedInformation(bedNumber, data) {
       data: data
     };
 
-    $.ajax(settings).done(response => {
-      alert(JSON.stringify(response));
-      console.log("response: " + response);
-      resolve(response);
+    $.ajax(settings).done(function(data,textStatus,jqXHR) {
+      alert(textStatus);
+      resolve(textStatus);
     });
   });
 }
@@ -507,7 +506,7 @@ function getPositionInfo(bedNumber, posX, posY) {
     };
 
     $.ajax(settings).done(response => {
-      console.log("response: " + response);
+      console.log("GET POSITION response: " + response);
       resolve(response);
     });
   });
@@ -544,7 +543,7 @@ async function setEditPosition(bedNumber, posX, posY) {
 
   <div class='col-6 mdl-card__supporting-text'>
     <div class='row common-name'>
-    Plant:<input class="mdl-textfield__input" type="text" name="commonName" value="${
+    Plant:<input class="mdl-textfield__input" type="text" name="plantType.commonName" value="${
     positionInfo.plantType.commonName
     }">
     </div>
@@ -622,10 +621,10 @@ function updatePositionInformation(bedNumber, data, posX, posY) {
       data: data
     };
 
-    $.ajax(settings).done(response => {
-      alert(JSON.stringify(response));
-      console.log("response: " + response);
-      resolve(response);
+    $.ajax(settings).done(function(data,textStatus,jqXHR) {
+      alert(textStatus);
+      console.log("response: " + textStatus);
+      resolve(textStatus);
     });
   });
 }

@@ -127,7 +127,7 @@ router.get('/bed/:id/:position1,:position2', function (req, res) {
 router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
   let found = false;
 
-  const requiredFields = ['startDate', 'occupied', 'commonName', 'harvestDate'];
+  const requiredFields = ['startDate', 'occupied', 'plantType.commonName', 'harvestDate'];
 
   console.log("req.body.keys: " + Object.keys(req.body));
   //check req.body for any of required keys
@@ -215,7 +215,7 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
   //console.log("Decoded token:  " + JSON.stringify(decoded));
   try {
 
-    let decoded = jwt.verify(token, 'notsecretatall');
+    let decoded = jwt.verify(token, 'testsecrettest');
     console.log("Decoded token:  " + JSON.stringify(decoded));
 
   } catch (err) {
