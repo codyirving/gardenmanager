@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { Gardenbeds } = require('../public/models/gardenbeds_model');
 const { Notification } = require('../public/models/notifications_model');
+
+
 //get notifications for a bed
 router.get('/bed/:id/notifications/', jsonParser, (req, res) => {
     Gardenbeds.findOne({ "bedNumber": `${req.params.id}` }).then(
@@ -48,9 +50,6 @@ router.post('/bed/:id/notifications/', jsonParser, (req, res) => {
   );
 
 });
-
-
-
 
 
 
@@ -118,15 +117,6 @@ router.post('/bed/:id/notifications/', jsonParser, (req, res) => {
 
 
 
-
-function intersect(a, b) {
-  var t;
-  if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
-  return a.filter(function (e) {
-    return b.indexOf(e) > -1;
-  });
-}
-
 //delete notification from bed
 router.delete('/bed/:bedNumber/notifications/:id', jsonParser, (req,res) => {
   Gardenbeds.update({"bedNumber":req.params.bedNumber}, { $pull: {"notifications":{"_id":
@@ -146,4 +136,17 @@ router.delete('/bed/:bedNumber/notifications/:id', jsonParser, (req,res) => {
 });
 
 
+
+
+
+
+
+
+function intersect(a, b) {
+  var t;
+  if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
+  return a.filter(function (e) {
+    return b.indexOf(e) > -1;
+  });
+}
   module.exports = router;

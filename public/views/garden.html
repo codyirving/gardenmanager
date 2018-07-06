@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="/javascripts/indexScripts.js"></script>
 
@@ -24,29 +25,29 @@
         <div class="col-4 login"><a href="/login">Login:</a></div>
     </div>
     <div class="row information-row">
-        <div class="col-4 demo-card-wide mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Notifications</h2>
+        <div class="col-4">
+            <div class="title">
+                <h2 class="title-text">Notifications</h2>
                 
               </div>
-              <div class="notifications mdl-card__supporting-text">
+              <div class="notifications support-text">
                   
               </div>
         </div>
-        <div class="col-4 demo-card-wide mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Notes</h2>
+        <div class="col-4">
+            <div class="title">
+                <h2 class="title-text">Notes</h2>
                
               </div>
-              <div class="notes mdl-card__supporting-text">
+              <div class="notes support-text">
               </div>
         </div>
-        <div class="col-4 demo-card-wide mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Soil Log</h2>
+        <div class="col-4">
+            <div class="title">
+                <h2 class="title-text">Soil Log</h2>
                 
               </div>
-              <div class="soil-log mdl-card__supporting-text">
+              <div class="soil-log support-text">
               </div>
         </div>
     </div>
@@ -64,7 +65,10 @@
     setNotifications(bedNumber);
     setNotes(bedNumber);
     setSoilLog(bedNumber);
-
+    //ensure updates are shown on back click
+    if(performance.navigation.type == 2){
+        location.reload(true);
+    }
     
 </script>
 

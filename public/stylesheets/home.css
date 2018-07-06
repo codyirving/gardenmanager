@@ -1,19 +1,29 @@
-html, body {margin:0;padding:0;overflow:hidden;/* background-color: forestgreen; */}
-svg {position:fixed;top:0;left:0;height:100%;width:100%;/* z-index: -1; */}
+
+
+html, body {margin:0;padding:0;overflow:hidden;background-color: grey;}
+svg { position:fixed; top:0; left:0; height:100%; width:100% }
 .welcome {
     text-align:  center;
     font-size: 70px;
     /* z-index: 100; */
-    background-color: none;
+    background-color: lightblue;
     color: yellow;
+}
+.blankrow {
+  height: 60px;
+  background: blue;
+  /* position: absolute; */
+  /* bottom: -12px; */
+  /* left: 0; */
 }
 
 
 
 
 
-
-
+.hover {
+  border: 2px solid red;
+}
 
 
 

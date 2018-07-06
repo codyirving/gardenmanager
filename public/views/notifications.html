@@ -4,20 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit position </title>
+    <title>Edit Notifications</title>
     <link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="/javascripts/moment.js"></script>
     <script src="/javascripts/indexScripts.js"></script>
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/stylesheets/admin.css">
 </head>
 <body>
-    <div class="row">
-        <div class="col-12 position">
-            
-        </div>
+    <div class="row notifications-list">
+       
     </div>
+<div class="row">
+    <div class="col-12 notifications-textbox">
+        <form action="javascript:sendNotification(`<%= bedNumber %>`)" method="post" id="notification-form">
+        <input type="text" name="message" id="notification">
+        <input type="submit" name="submit" value="Send">
+        </form>
+    </div>
+
+</div>
+
+
 </body>
 
 
@@ -27,11 +37,16 @@
 
 <script>
     const bedNumber = "<%= bedNumber %>";
-    const posX = "<%= posX %>";
-    const posY =  "<%= posY %>";
+    
+    setEditNotifications(bedNumber);
 
-    setEditPosition(bedNumber,posX,posY);
-
+   
+$($("#notification-delete-button").click(function() {
+  console.log("HI im deleting");
+      alert($(this).parent().siblings().find('.notification-id'));
+  }
+));
+   
 
 </script>
 </html>

@@ -1,5 +1,5 @@
 const testvar = "hi";
-
+//!add auth
 async function getBedsInformation() {
   return new Promise(function (resolve, reject) {
     var settings = {
@@ -36,9 +36,13 @@ async function updateBedInformation(bedNumber, data) {
       data: data
     };
 
-    $.ajax(settings).done(function(data,textStatus,jqXHR) {
-      alert(textStatus);
+    $.ajax(settings).done(function (data, textStatus, jqXHR) {
+      console.log(jqXHR.statusText);
+      alert(JSON.stringify(jqXHR.statusText));
       resolve(textStatus);
+    }).fail(function () {
+      console.log("FAILED");
+      alert("Update Failed");
     });
   });
 }
@@ -139,27 +143,29 @@ async function getBedNotifications(bedNumber) {
     let messages = "";
     $.ajax(settings).done(response => {
       messages;
+      console.log("RESPONSE!: " + JSON.stringify(response.notifications));
+      resolve(response.notifications);
+      // Array.prototype.forEach.call(response.notifications, notification => {
+      //   notification.message
 
-      Array.prototype.forEach.call(response.notifications, notification => {
-        message = `<li class="mdl-list__item"> <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon">person</i> ${
-          notification.message
-          }</span>  </li>`;
-        console.log("message: " + message);
-        messages = messages + "\n" + message;
-      });
-      console.log(
-        "typeofMessagesTotal: " +
-        typeof messages +
-        "  messages total: " +
-        messages
-      );
-      console.log("resolving: " + messages);
-      messages = messages +
-        `<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-        <i class="material-icons">add</i>
-        </button>`;
-      resolve(messages);
+
+
+      //   //   message = `<li class="item"> <span class="content">
+      //   //   <i class="icon"></i> ${
+      //   //     notification.message
+      //   //     }</span>  </li>`;
+      //   //   console.log("message: " + message);
+      //   //   messages = messages + "\n" + message;
+      //   // });
+
+
+
+      //   console.log("resolving: " + messages);
+
+
+      //   //resolve(response.notifications);
+
+      // });
     });
   });
 }
@@ -179,26 +185,27 @@ async function getBedNotes(bedNumber) {
     $.ajax(settings).done(response => {
       messages;
 
-      Array.prototype.forEach.call(response.notes, note => {
-        message = `<li class="mdl-list__item"> <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon">person</i> ${
-          note.content
-          }</span>  </li>`;
-        console.log("message: " + message);
-        messages = messages + "\n" + message;
-      });
-      console.log(
-        "typeofMessagesTotal: " +
-        typeof messages +
-        "  messages total: " +
-        messages
-      );
-      console.log("resolving: " + messages);
-      messages = messages +
-        `<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-        <i class="material-icons">add</i>
-        </button>`;
-      resolve(messages);
+      resolve(response.notes);
+      // Array.prototype.forEach.call(response.notes, note => {
+      //   message = `<li class="item"> <span class="content">
+      //   <i class="icon"></i> ${
+      //     note.content
+      //     }</span>  </li>`;
+      //   console.log("message: " + message);
+      //   messages = messages + "\n" + message;
+      // });
+      // console.log(
+      //   "typeofMessagesTotal: " +
+      //   typeof messages +
+      //   "  messages total: " +
+      //   messages
+      // );
+      // console.log("resolving: " + messages);
+      // // messages = messages +
+      // //   `<button class="button">
+      // //   <i class="material-icons">add</i>
+      // //   </button>`;
+      // resolve(messages);
     });
   });
 }
@@ -215,12 +222,13 @@ async function getBedSoilLog(bedNumber) {
       contentType: false
     };
     let messages = "";
+    let i = 0;
     $.ajax(settings).done(response => {
       messages;
 
       Array.prototype.forEach.call(response.soilLog, soilLog => {
-        message = `<li class="mdl-list__item"> <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-icon">person</i> ${
+        message = `<li class="item"> <span class="content">
+        <i class="icon">#${++i}</i> ${
           soilLog.action
           }</span>  </li>`;
         console.log("message: " + message);
@@ -233,10 +241,10 @@ async function getBedSoilLog(bedNumber) {
         messages
       );
       console.log("resolving: " + messages);
-      messages = messages +
-        `<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-        <i class="material-icons">add</i>
-        </button>`;
+      // messages = messages +
+      //   `<button class="button">
+      //   <i class="material-icons">add</i>
+      //   </button>`;
       resolve(messages);
     });
   });
@@ -264,13 +272,13 @@ function generatePositions(bedNumber) {
       Array.prototype.forEach.call(row, (position, index2) => {
         htmlResponse += `<div class='${
           position.occupied ? "occupied" : "unoccupied"
-          } col-2point4 plant-position demo-card-square mdl-card mdl-shadow--2dp'>
+          } col-2point4 plant-position p'>
          
-        <div class="mdl-card__title mdl-card--expand">
-        <h2 class="mdl-card__title-text">${position.plantType.commonName}</h2>
+        <div class="title">
+        <h2 class="title-text">${position.plantType.commonName}</h2>
         </div>
-        <div class="mdl-card__supporting-text">
-          <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="/gardener/${bedNumber}/edit/${index1},${index2}"><i class="material-icons">more_vert</i></a>
+        <div class="position-edit-text">
+          <a class="button" href="/gardener/${bedNumber}/edit/${index1},${index2}"><i class="material-icons">edit</i></a>
         </div>
           </div>`;
       });
@@ -302,13 +310,41 @@ async function setOwner(bedNumber) {
   $(".owner").text(owner);
 }
 async function setNotifications(bedNumber) {
-  const messages = await getBedNotifications(bedNumber);
-  console.log("setNotifications to: " + messages);
-  $(".notifications").html(messages);
+  const notifications = await getBedNotifications(bedNumber);
+  
+  Array.prototype.forEach.call(notifications, notification => {
+
+
+    $('.notifications').append(`
+          
+          <div class='notification-message row'> ${notification.message} </div>
+    
+       
+         
+       
+          `);
+
+  });
+
+
+
+  
 }
 async function setNotes(bedNumber) {
   const notes = await getBedNotes(bedNumber);
-  $(".notes").html(notes);
+  Array.prototype.forEach.call(notes, note => {
+
+
+    $('.notes').append(`
+          
+          <div class='notes-message row'> ${note.content} </div>
+    
+       
+         
+       
+          `);
+
+  });
 }
 async function setSoilLog(bedNumber) {
   const soilLog = await getBedSoilLog(bedNumber);
@@ -325,61 +361,63 @@ async function setAdminEditor() {
       ` <form class="row" id="updateform-${
       bed.bedNumber
       }" action="javascript:updateDB(${bed.bedNumber})">
-    <div class="col-12 demo-card-wide mdl-card mdl-shadow--2dp">
-    <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Bed #${bed.bedNumber}</h2>
+    <div class="col-12 ">
+    <div class="title">
+    <h2 class="title-text">Bed #${bed.bedNumber}</h2>
   </div>
   <div class="row">
-    <div class='col-6 mdl-card__supporting-text'>
+    <div class='col-6 support-text'>
     
       <div class='row'>
       Owner:
-      <input class="mdl-textfield__input" type="text" name="owner" id="owner" value="${
+    
+      <input class="input" type="text" name="owner" id="owner" value="${
       bed.owner
       }">
+      
           
       </div>
       <div class='row'>
       Phone:
-      <input class="mdl-textfield__input" type="text" name="phoneNumber" id="phoneNumber" value="${
+      <input class="input" type="text" name="phoneNumber" id="phoneNumber" value="${
       bed.contact.phoneNumber
       }">
       </div>
       <div class='row'>
       Email:
-      <input class="mdl-textfield__input" type="text" name="email" value="${
+      <input class="input" type="text" name="email" value="${
       bed.contact.email
       }">
       </div>
 
     </div>
 
-    <div class='col-6 mdl-card__supporting-text'>
+    <div class='col-6 support-text'>
       <div class='row'>
       Address:
-      <input class="mdl-textfield__input" type="text" name="address" value="${
+      <input class="input" type="text" name="address" value="${
       bed.contact.address
       }">
       </div>
       <div class='row'>
       Length:
-      <input type="text" class="mdl-textfield__input" name="length" maxwidth="2" size="2" value="${
+      <input type="text" class="input" name="length" maxwidth="2" size="2" value="${
       bed.length
       }">
       Width:
-      <input type="text" class="mdl-textfield__input" name="width" maxwidth="2" size="2" value="${
+      <input type="text" class="input" name="width" maxwidth="2" size="2" value="${
       bed.width
       }">
       </div>
       <div class='row'>
       Date Acquired:
-     <input class="mdl-textfield__input" type="text" name="dateAcquired"  value="${
+     <input class="input" type="text" name="dateAcquired"  value="${
       bed.dateAcquired
       }">
       </div>
       </div>
       <div class='row'>
-      <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" name="submit" value="Update">
+      <input class="button" type="submit" name="submit" value="Update">
       </div>
     
 
@@ -390,13 +428,8 @@ async function setAdminEditor() {
       </form>
       <div class='row'>
       <div class='col-2 send-notification-button'>
-      <button onclick="javascript:sendNotification(${
-      bed.bedNumber
-      });" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Send Notification</button>
-      
-      <button onclick="javascript:viewBed(${
-      bed.bedNumber
-      });" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">View Bed</button>
+      <button onclick="javascript:viewNotifications(${bed.bedNumber});" class="button">Send Notification</button>
+      <button onclick="javascript:viewBed(${bed.bedNumber});" class="button">View Bed</button>
       </div>
 
 
@@ -411,11 +444,72 @@ async function setAdminEditor() {
 function viewBed(bedNumber) {
   window.location.assign(`/gardener/${bedNumber}`);
 }
+function viewNotifications(bedNumber) {
+  window.location.assign(`/admin/notifications/${bedNumber}`);
+}
+async function sendNotification(bedNumber) {
+  let form = new FormData(document.getElementById("notification-form"));
+
+  //let message = form.get("notification");
+  if (form.get('message').length < 1) {
+    alert("Message empty!");
+    return;
+    //$(this).parents('p').addClass('warning');
+  }
+
+  //let form = new FormData(document.getElementById("notification-form"));
+
+  //let message = form.get("notification");
+  const submitJSON = {};
+  for (var pair of form.entries()) {
+    console.log(pair[0] + ", " + pair[1]);
+    submitJSON[pair[0]] = pair[1];
+  }
+  let response = await sendBedNotification(bedNumber, submitJSON);
+  console.log(response);
+}
+
+
+async function sendBedNotification(bedNumber, data) {
+  console.log("Data:" + JSON.stringify(data));
+  console.log("authToken: " + document.cookie.authToken);
+  return new Promise(function (resolve, reject) {
+    var settings = {
+      async: true,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          `Bearer ${document.cookie.authToken}`
+        );
+      },
+      url: `http://localhost:3001/bed/${bedNumber}/notifications`,
+      method: "POST",
+      dataType: "json",
+      data: data
+    };
+
+    $.ajax(settings).done(function (data, textStatus, jqXHR) {
+      console.log(jqXHR.statusText);
+      alert(JSON.stringify(jqXHR.statusText));
+      resolve(textStatus);
+    }).fail(function () {
+      console.log("FAILED");
+      alert("Update Failed");
+    });
+  });
+}
+
+
+
+
+
+
+
 
 async function updateDB(bedNumber) {
   console.log("bed:" + bedNumber);
-  const formID = `#updateform-${bedNumber}`;
-  const formdata = $(formID).serializeArray();
+  //const formID = `#updateform-${bedNumber}`;
+  //const formdata = $(formID).serializeArray();
 
   var form = new FormData(document.getElementById("updateform-" + bedNumber));
   var inputValue = form.get("owner");
@@ -430,8 +524,7 @@ async function updateDB(bedNumber) {
   let response = await updateBedInformation(bedNumber, submitJSON);
 
   console.log(response);
-  console.log("formdata: " + JSON.stringify(formdata));
-  console.log("formedata2: " + inputValue);
+
 }
 
 async function login() {
@@ -517,33 +610,33 @@ async function setEditPosition(bedNumber, posX, posY) {
   console.log("pos info " + positionInfo);
 
   let html = ` <form class="row" id="editposition-${bedNumber}" action="javascript:updatePOS(${bedNumber},${posX},${posY})">
-  <div class="col-12 demo-card-wide mdl-card mdl-shadow--2dp">
-  <div class="mdl-card__title">
-  <h2 class="mdl-card__title-text">Bed #${bedNumber} Position ${posX},${posY}</h2>
+  <div class="col-12">
+  <div class="title">
+  <h2 class="title-text">Bed #${bedNumber} </h2>
 </div>
 <div class="row">
-  <div class='col-6 mdl-card__supporting-text'>
+  <div class='col-6 support-text'>
   
     <div class='row'>
     
     
-    Start Date:<input class="mdl-textfield__input" type="text" name="startDate" value="${
-    positionInfo.startDate
+    Start Date:<input class="input" type="text" name="startDate" value="${
+    moment(positionInfo.startDate)
     }">
     </div><br>
     <div class='row'>
-    Harvest Date:<input class="mdl-textfield__input" type="text" name="harvestDate" value="${
-    positionInfo.harvestDate
+    Harvest Date:<input class="input" type="text" name="harvestDate" value="${
+    moment(positionInfo.harvestDate)
     }">
     </div><br>
     <div class='row'>
-    Occupied:<input class="mdl-radio__button" type="radio" id="true" name="occupied" value="true"><label for="true">TRUE</label><input class="mdl-radio__button" type="radio" id="false" name="occupied" value="false"><label for="false">FALSE</label>
+    Occupied:<input class="radio-button" type="radio" id="true" name="occupied" value="true"><label for="true">TRUE</label><input class="radio-button" type="radio" id="false" name="occupied" value="false"><label for="false">FALSE</label>
     </div>
     </div>
 
-  <div class='col-6 mdl-card__supporting-text'>
+  <div class='col-6 support-text'>
     <div class='row common-name'>
-    Plant:<input class="mdl-textfield__input" type="text" name="plantType.commonName" value="${
+    Plant:<input class="input" type="text" name="plantType.commonName" value="${
     positionInfo.plantType.commonName
     }">
     </div>
@@ -553,7 +646,7 @@ async function setEditPosition(bedNumber, posX, posY) {
     </div>
     </div>
     
-    <div class='col-12 update-button'><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" name="submit" value="Update"></div>
+    <div class='col-12 update-button'><input class="submit-button" type="submit" name="submit" value="Update"></div>
     <br>
     </div>
     </div>
@@ -621,13 +714,61 @@ function updatePositionInformation(bedNumber, data, posX, posY) {
       data: data
     };
 
-    $.ajax(settings).done(function(data,textStatus,jqXHR) {
+    $.ajax(settings).done(function (data, textStatus, jqXHR) {
       alert(textStatus);
       console.log("response: " + textStatus);
       resolve(textStatus);
     });
   });
 }
+
+
+async function setEditNotifications(bedNumber) {
+
+
+  const notifications = await getBedNotifications(bedNumber);
+  Array.prototype.forEach.call(notifications, notification => {
+    moment().format('MMMM Do YYYY, h:mm:ss');
+    let formattedDate = moment(notification.date);
+
+    $('.notifications-list').append(`
+          <div class='row'>
+          <div class='notification-message col-4'> ${notification.message} </div>
+          <div class='notification-date col-4'>${formattedDate}</div>
+          <div class='notification-id'>${notification._id}</div>
+          <div class='col-4'><button id='notification-delete-button'>Delete</button></div>
+          </div>
+          `);
+
+  });
+
+}
+async function setEditNotes(bedNumber) {
+
+
+  const notes = await getBedNotes(bedNumber);
+  Array.prototype.forEach.call(notes, note => {
+    let formattedDate = moment(note.date);
+
+    $('.notes-list').append(`
+          <div class='row'>
+          <div class='note-message col-4'> ${note.content} </div>
+          <div class='note-date col-4'>${formattedDate}</div>
+          <div class='note-id'>${note._id}</div>
+          <div class='col-4'><button id='note-delete-button'>Delete</button></div>
+          </div>
+          `);
+
+  });
+
+}
+
+
+
+
+
+
+
 
 ///edit table
 // $('.plant-position').click(function(){

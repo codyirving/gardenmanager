@@ -48,8 +48,12 @@ table {
 
 
 body {
-  
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-family: 'Gaegu', cursive;
+  background: url('/images/pb02.svg');
+  background-repeat: no-repeat;
+  /* opacity: .4; */
+  background-size: cover;
 }
 
 a {
@@ -63,7 +67,14 @@ a {
   border: 1px solid black;
   margin: 1px;
 }
-
+.occupied {
+  background: url('/images/leaf.png');
+  background-repeat: no-repeat;
+  /* opacity: .4; */
+  background-size: 40%;
+  background-position: 50px 45px;
+  background-color: lightgreen;
+}
 [class*="bedNumber"] {
   height: auto;
   text-align:  center;
@@ -72,25 +83,32 @@ a {
 
 .owner-row {
   height: 40px;
-  background-color: whitesmoke;
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 10%;
   text-align: center;
-  font-size: 26px;
+  font-size: 39px;
 }
-
+.information-row {
+  background-color: white;
+  /* padding: 25px; */
+  font-size: 28px;
+}
 
 
 .notifications {
   background-color: lightskyblue;
+  min-height: 69px;
 }
 .notes {
   background-color: lightgray;
+  min-height: 69px;
 }
-.soil-log {background-color:  sandybrown;}
+.soil-log {background-color:  #00B7FF;min-height:  69px;}
 
 .unoccupied {
-  background-color: gainsboro;
+  background-color: #615443;
 }
-
+.support-text {}
 .demo-card-square.mdl-card {
   /* width: 158px; */
   /* height: 105px; */
@@ -98,6 +116,13 @@ a {
 .demo-card-square > .mdl-card__title {
   color: #fff;
   background-color: green;
+}
+.hover {
+  opacity: .6;
+}
+.row1 {
+  background-color: #615443;
+  /* padding: 25px; */
 }
 
 .rowpadding {
@@ -110,8 +135,8 @@ a {
 
 .row {
   max-width: 1000px;
-  padding-left: 20px;
-  padding-right: 20px;
+  /* padding-left: 20px; */
+  /* padding-right: 20px; */
   margin: 0 auto;
   /* height: 61px; */
 }
@@ -148,10 +173,11 @@ a {
   width: 100%;
 }
 /* Non-mobile, grid */
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 1000px) {
   /* 3 columns, 3/12 in % */
   .col-2point4 {
-    width: 19.79%;
+    width: 9.79%;
+    height: 90px;
   }
   .col-3 {
     width: 25%;

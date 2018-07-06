@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/stylesheets/home.css">
 </head>
 <body>
-   <div class="row welcome"><div class="col-12">Welcome to the NPC Community Garden!</div></div>
 
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
@@ -5420,8 +5419,28 @@
          d="m 758.03441,254.78268 32.94546,32.17484 8.98512,-39.94118 z"
          id="bed22"
          inkscape:connector-curvature="0" />
+
+         <text
+       style="font-size:67.46048737px;font-family:serif;text-anchor:middle;fill:#ffaa56;stroke-dasharray:none"
+       stroke-linejoin="null"
+       stroke-linecap="null"
+       x="533.42041"
+       y="120.25417"
+       id="svg_2"
+       font-size="24"
+       xml:space="preserve"
+       transform="matrix(0.68225959,0.72921724,-0.7539361,0.65989075,0,0)">Welcome to the NPC</text>
+    <text
+       style="font-size:69.11269379px;font-family:serif;text-anchor:middle;fill:#ffad56;stroke-dasharray:none"
+       stroke-linejoin="null"
+       stroke-linecap="null"
+       x="533.32141"
+       y="175.89003"
+       id="svg_3"
+       font-size="24"
+       xml:space="preserve"
+       transform="matrix(0.67731206,0.73569585,-0.73569585,0.67731206,0,0)">Community Garden</text>
     </svg>
-    
 
 
 </body>
@@ -5432,7 +5451,13 @@
 $( document ).ready(function() {
     for(let i = 0; i < 45; i++) {
 
-    $(`#bed${i}`).click(function() {
+    $(`#bed${i}`).hover(function() {
+        console.log(`bed ${i} this: ${this}`);
+        $(this).addClass("hover");
+        },function() {
+            $(this).removeClass("hover");
+        }
+    ).click(function() {
         window.location.href = `/gardener/${i}`;
     });
 

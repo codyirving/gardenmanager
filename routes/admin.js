@@ -71,14 +71,6 @@ router.get('/admin/login', function (req, res, next) {
 
 
 
-
-
-
-
-
-
-
-
 router.get('/admin/dashboard/', function (req, res, next) {
     console.log("reqcooks: " + JSON.stringify(req.cookies));
     let token = req.cookies.authToken;
@@ -91,10 +83,53 @@ router.get('/admin/dashboard/', function (req, res, next) {
         res.render('login.html');
 
     }
-    
-   
+
 
 });
+
+router.get('/admin/notifications/:id', function (req,res,next) {
+    let token = req.cookies.authToken;
+    console.log("TOKEN from cookie: " + token);
+    try{
+        let decoded = jwt.verify(token, 'testsecrettest');
+        console.log("Decoded token:  " + JSON.stringify(decoded));
+        res.render('notifications.html', {bedNumber:req.params.id});
+    
+    }catch (err) {
+        res.render('login.html');
+
+    }
+
+});
+
+router.get('/admin/notes/:id', function (req,res,next) {
+    let token = req.cookies.authToken;
+    console.log("TOKEN from cookie: " + token);
+    try{
+        let decoded = jwt.verify(token, 'testsecrettest');
+        console.log("Decoded token:  " + JSON.stringify(decoded));
+        res.render('notes.html', {bedNumber:req.params.id});
+    
+    }catch (err) {
+        res.render('login.html');
+
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //!shows all db info -- dangerous
