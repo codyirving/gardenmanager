@@ -214,8 +214,10 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
   //let decoded = jwt.verify(token, 'notsecretatall');
   //console.log("Decoded token:  " + JSON.stringify(decoded));
   try {
-
-    let decoded = jwt.verify(token, 'testsecrettest');
+    //line for production
+    //let decoded = jwt.verify(token, 'testsecrettest');
+    //line for testing
+    let decoded = jwt.verify(token, 'notsecretatall'); 
     console.log("Decoded token:  " + JSON.stringify(decoded));
 
   } catch (err) {
