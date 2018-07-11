@@ -35,6 +35,7 @@ mongoose.Promise = global.Promise;
 
 const { router: usersRouter } = require('../users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('../auth');
+const { JWT_SECRET } = require('../config');
 
 
 router.use('/api/users/', usersRouter);
@@ -76,14 +77,10 @@ router.get('/bed/:id', function (req, res) {
   let token = req.cookies.authToken;
   console.log("TOKEN from cookie: " + token);
   console.log("TOKEN from req.cookies: " + JSON.stringify(req.query));
-  //change to second secret to pass test.
-  //let decoded = jwt.verify(token, 'notsecretatall');
-  //console.log("Decoded token:  " + JSON.stringify(decoded));
+
   try {
-    //line for production
-    //let decoded = jwt.verify(token, 'testsecrettest');
-    //line for testing
-    let decoded = jwt.verify(token, 'testsecrettest'); 
+
+    let decoded = jwt.verify(token, JWT_SECRET); 
     console.log("Decoded token:  " + JSON.stringify(decoded));
 
   } catch (err) {
@@ -91,9 +88,7 @@ router.get('/bed/:id', function (req, res) {
     return res.status('401').send("unauthorized");
 
   }
-  
-  
-  
+
   
   const bedNumber = req.params.id;
   Gardenbeds.findOne({ "bedNumber": `${bedNumber}` }).then(
@@ -234,14 +229,10 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
   let token = req.cookies.authToken;
   console.log("TOKEN from cookie: " + token);
   console.log("TOKEN from req.cookies: " + JSON.stringify(req.query));
-  //change to second secret to pass test.
-  //let decoded = jwt.verify(token, 'notsecretatall');
-  //console.log("Decoded token:  " + JSON.stringify(decoded));
+  
   try {
-    //line for production
-    //let decoded = jwt.verify(token, 'testsecrettest');
-    //line for testing
-    let decoded = jwt.verify(token, 'testsecrettest'); 
+  
+    let decoded = jwt.verify(token, JWT_SECRET); 
     console.log("Decoded token:  " + JSON.stringify(decoded));
 
   } catch (err) {

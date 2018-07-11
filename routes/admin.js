@@ -30,7 +30,7 @@ mongoose.Promise = global.Promise;
 
 const { router: usersRouter } = require('../users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('../auth');
-
+const { JWT_SECRET } = require('../config');
 
 router.use('/api/users/', usersRouter);
 router.use('/api/auth/', authRouter);
@@ -76,7 +76,7 @@ router.get('/admin/dashboard/', function (req, res, next) {
     let token = req.cookies.authToken;
     console.log("TOKEN from cookie: " + token);
     try{
-        let decoded = jwt.verify(token, 'testsecrettest');
+        let decoded = jwt.verify(token, JWT_SECRET);
         console.log("Decoded token:  " + JSON.stringify(decoded));
         res.render('admin.html');
     }catch (err) {
@@ -91,7 +91,7 @@ router.get('/admin/notifications/:id', function (req,res,next) {
     let token = req.cookies.authToken;
     console.log("TOKEN from cookie: " + token);
     try{
-        let decoded = jwt.verify(token, 'testsecrettest');
+        let decoded = jwt.verify(token, JWT_SECRET);
         console.log("Decoded token:  " + JSON.stringify(decoded));
         res.render('notifications.html', {bedNumber:req.params.id});
     
@@ -106,7 +106,7 @@ router.get('/admin/notes/:id', function (req,res,next) {
     let token = req.cookies.authToken;
     console.log("TOKEN from cookie: " + token);
     try{
-        let decoded = jwt.verify(token, 'testsecrettest');
+        let decoded = jwt.verify(token, JWT_SECRET);
         console.log("Decoded token:  " + JSON.stringify(decoded));
         res.render('notes.html', {bedNumber:req.params.id});
     
