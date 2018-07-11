@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/stylesheets/admin.css">
 </head>
 <body>
+
+    <div class="bedNumber" id="<%= bedNumber %>"><%= bedNumber %></div>
     <div class="row notifications-list">
        
     </div>
@@ -38,14 +40,11 @@
 <script>
     const bedNumber = "<%= bedNumber %>";
     
-    setEditNotifications(bedNumber);
+  
+        setEditNotifications(bedNumber);
+    
+   console.log("continue");
 
-   
-$($("#notification-delete-button").click(function() {
-  console.log("HI im deleting");
-      alert($(this).parent().siblings().find('.notification-id'));
-  }
-));
    
 
 </script>

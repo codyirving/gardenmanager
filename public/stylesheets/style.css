@@ -98,12 +98,20 @@ a {
 .notifications {
   background-color: lightskyblue;
   min-height: 69px;
+  padding: 6px;
 }
 .notes {
   background-color: lightgray;
   min-height: 69px;
+  padding: 6px;
 }
-.soil-log {background-color:  #00B7FF;min-height:  69px;}
+.notes-message {
+  border-bottom: 1px solid black;
+}
+.notification-message {
+  border-bottom: 1px solid black;
+}
+.soil-log {background-color:  #00B7FF;min-height:  69px;padding:  6px;}
 
 .unoccupied {
   background-color: #615443;

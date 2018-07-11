@@ -129,7 +129,7 @@ router.delete('/bed/:bedNumber/notifications/:id', jsonParser, (req,res) => {
         console.log("SUCCESS: " + JSON.stringify(success));
         return res.status(404).send("Record Not found");
       } else {
-        return res.status(201).send("Successfully Deleted");
+        return res.status(201).json({});
       }
     }
   );

@@ -30,6 +30,10 @@
   body {
       line-height: 1;
       background-color: darkslategray;
+      background: url('/images/pb02.svg');
+      background-repeat: no-repeat;
+      /* opacity: .4; */
+      background-size: cover;
   }
   ol, ul {
       list-style: none;
@@ -123,10 +127,17 @@ input[type=submit]:hover {
     padding: 5px;
   }
   .notification-id {
-    display: none;
+    
   }
-
-
+  .image-urls {
+    display:none;
+  }
+  .notification-message {
+    font-size: 18px;
+  }
+  .notification-date {
+    font-size: 12px;
+  }
   .notes-list {
     margin: 10px;
     margin-left: 10px;
@@ -136,6 +147,9 @@ input[type=submit]:hover {
   }
   .note-id {
     display: none;
+  }
+  .notification-rows {
+    border-bottom: 1px solid black;
   }
 
 
@@ -173,7 +187,9 @@ input[type=submit]:hover {
   }
 
 
-
+  .hidden {
+    display:none;
+  }
 
 
 
@@ -194,6 +210,7 @@ input[type=submit]:hover {
     /* height: 24px; */
     /* text-align: center; */
     /* justify-items: right; */
+    /* border-bottom: 1px solid; */
   }
   /* Clearfix */
   .row::before,

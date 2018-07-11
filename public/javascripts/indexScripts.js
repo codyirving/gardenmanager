@@ -1,9 +1,14 @@
-const testvar = "hi";
 //!add auth
 async function getBedsInformation() {
   return new Promise(function (resolve, reject) {
     var settings = {
       async: true,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          `Bearer ${document.cookie.authToken}`
+        );
+      },
       crossDomain: true,
       url: `http://localhost:3001/bed/`,
       method: "GET",
@@ -19,8 +24,7 @@ async function getBedsInformation() {
 }
 
 async function updateBedInformation(bedNumber, data) {
-  console.log("Data:" + JSON.stringify(data));
-  console.log("authToken: " + document.cookie.authToken);
+
   return new Promise(function (resolve, reject) {
     var settings = {
       async: true,
@@ -38,15 +42,16 @@ async function updateBedInformation(bedNumber, data) {
 
     $.ajax(settings).done(function (data, textStatus, jqXHR) {
       console.log(jqXHR.statusText);
-      alert(JSON.stringify(jqXHR.statusText));
+      alert("Bed Updated.");
       resolve(textStatus);
     }).fail(function () {
       console.log("FAILED");
       alert("Update Failed");
+      window.location.reload();
     });
   });
 }
-
+//unused function
 async function generateBeds() {
   try {
     const numberOfBeds = 15;
@@ -85,10 +90,6 @@ async function getBedOwner(i) {
   return new Promise(function (resolve, reject) {
     if (ownerList != null) resolve(ownerList[i - 1].owner);
     else reject(Error("reejected"));
-    // setTimeout(function() {
-    //   console.log("resolving: " + ownerList);
-    //   resolve(JSON.stringify(ownerList[i].owner));
-    // }, 100);
   });
 }
 
@@ -107,25 +108,9 @@ async function getBedOwners() {
     $.ajax(settings).done(response => {
       console.log("response typeof: " + typeof response);
       ownerList = response;
-
-      Array.prototype.forEach.call(response, bed => {
-        //blank
-      });
-      console.log(
-        "typeofMessagesTotal: " +
-        typeof ownerList +
-        "  messages total: " +
-        ownerList
-      );
-
       if (ownerList != undefined) resolve(ownerList);
       else reject(Error("reejected"));
     });
-
-    // setTimeout(function() {
-    //   console.log("resolving: " + ownerList);
-    // resolve(ownerList);
-    // }, 500);
   });
 }
 
@@ -145,27 +130,8 @@ async function getBedNotifications(bedNumber) {
       messages;
       console.log("RESPONSE!: " + JSON.stringify(response.notifications));
       resolve(response.notifications);
-      // Array.prototype.forEach.call(response.notifications, notification => {
-      //   notification.message
+ 
 
-
-
-      //   //   message = `<li class="item"> <span class="content">
-      //   //   <i class="icon"></i> ${
-      //   //     notification.message
-      //   //     }</span>  </li>`;
-      //   //   console.log("message: " + message);
-      //   //   messages = messages + "\n" + message;
-      //   // });
-
-
-
-      //   console.log("resolving: " + messages);
-
-
-      //   //resolve(response.notifications);
-
-      // });
     });
   });
 }
@@ -184,28 +150,7 @@ async function getBedNotes(bedNumber) {
     let messages = "";
     $.ajax(settings).done(response => {
       messages;
-
       resolve(response.notes);
-      // Array.prototype.forEach.call(response.notes, note => {
-      //   message = `<li class="item"> <span class="content">
-      //   <i class="icon"></i> ${
-      //     note.content
-      //     }</span>  </li>`;
-      //   console.log("message: " + message);
-      //   messages = messages + "\n" + message;
-      // });
-      // console.log(
-      //   "typeofMessagesTotal: " +
-      //   typeof messages +
-      //   "  messages total: " +
-      //   messages
-      // );
-      // console.log("resolving: " + messages);
-      // // messages = messages +
-      // //   `<button class="button">
-      // //   <i class="material-icons">add</i>
-      // //   </button>`;
-      // resolve(messages);
     });
   });
 }
@@ -274,12 +219,13 @@ function generatePositions(bedNumber) {
           position.occupied ? "occupied" : "unoccupied"
           } col-2point4 plant-position p'>
          
+          <div class="position-edit-text">
+          <a class="button" href="/gardener/${bedNumber}/edit/${index1},${index2}"><i class="material-icons">edit</i></a>
+        </div>
         <div class="title">
         <h2 class="title-text">${position.plantType.commonName}</h2>
         </div>
-        <div class="position-edit-text">
-          <a class="button" href="/gardener/${bedNumber}/edit/${index1},${index2}"><i class="material-icons">edit</i></a>
-        </div>
+        
           </div>`;
       });
       console.log("htmlResponse: " + htmlResponse);
@@ -412,7 +358,7 @@ async function setAdminEditor() {
       <div class='row'>
       Date Acquired:
      <input class="input" type="text" name="dateAcquired"  value="${
-      bed.dateAcquired
+      moment(bed.dateAcquired)
       }">
       </div>
       </div>
@@ -492,6 +438,7 @@ async function sendBedNotification(bedNumber, data) {
       console.log(jqXHR.statusText);
       alert(JSON.stringify(jqXHR.statusText));
       resolve(textStatus);
+      window.location.reload();
     }).fail(function () {
       console.log("FAILED");
       alert("Update Failed");
@@ -732,17 +679,66 @@ async function setEditNotifications(bedNumber) {
     let formattedDate = moment(notification.date);
 
     $('.notifications-list').append(`
-          <div class='row'>
+          <div class='row notification-rows'>
           <div class='notification-message col-4'> ${notification.message} </div>
           <div class='notification-date col-4'>${formattedDate}</div>
-          <div class='notification-id'>${notification._id}</div>
-          <div class='col-4'><button id='notification-delete-button'>Delete</button></div>
+          <div class='col-4'><input type='submit' class='notification-delete-button' value='Delete' id='${notification._id}'></input></div>
           </div>
           `);
-
+    $('.notification-id').addClass('hidden');
   });
+  $('body').append(`<script>$(".notification-delete-button").click(async function() {
+
+    console.log("HI im deleting: " + $('.bedNumber').attr('id'));
+    console.log("this: " + JSON.stringify($(this).attr('id')));
+    //alert($(this).attr('id'));
+    let response = await deleteNotification($('.bedNumber').attr('id'),$(this).attr('id'));
+    console.log("response?: " + response);
+
+    }
+  );</script>`);
 
 }
+
+
+
+function deleteNotification(bedNumber, notificationID) {
+
+  return new Promise(function (resolve, reject) {
+    var settings = {
+      async: true,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(
+          "Authorization",
+          `Bearer ${document.cookie.authToken}`
+        );
+      },
+      url: `http://localhost:3001/bed/${bedNumber}/notifications/${notificationID}`,
+      method: "DELETE",
+      dataType: "json",
+    
+    };
+
+    $.ajax(settings).done(function (data, textStatus, jqXHR) {
+      console.log("response: " + textStatus);
+      alert(textStatus);
+      
+      resolve(textStatus);
+      window.location.reload();
+    });
+  });
+
+
+}
+
+
+
+
+
+
+
+
+
 async function setEditNotes(bedNumber) {
 
 

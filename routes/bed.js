@@ -71,6 +71,30 @@ router.get('/bed/', function (req, res) {
 
 /* GET bed information. */
 router.get('/bed/:id', function (req, res) {
+  
+  let found = false;
+  let token = req.cookies.authToken;
+  console.log("TOKEN from cookie: " + token);
+  console.log("TOKEN from req.cookies: " + JSON.stringify(req.query));
+  //change to second secret to pass test.
+  //let decoded = jwt.verify(token, 'notsecretatall');
+  //console.log("Decoded token:  " + JSON.stringify(decoded));
+  try {
+    //line for production
+    //let decoded = jwt.verify(token, 'testsecrettest');
+    //line for testing
+    let decoded = jwt.verify(token, 'testsecrettest'); 
+    console.log("Decoded token:  " + JSON.stringify(decoded));
+
+  } catch (err) {
+    console.log("ERROR DECODING");
+    return res.status('401').send("unauthorized");
+
+  }
+  
+  
+  
+  
   const bedNumber = req.params.id;
   Gardenbeds.findOne({ "bedNumber": `${bedNumber}` }).then(
     bed => {
@@ -217,7 +241,7 @@ router.post('/bed/:id/', jsonParser, (req, res, next) => {
     //line for production
     //let decoded = jwt.verify(token, 'testsecrettest');
     //line for testing
-    let decoded = jwt.verify(token, 'notsecretatall'); 
+    let decoded = jwt.verify(token, 'testsecrettest'); 
     console.log("Decoded token:  " + JSON.stringify(decoded));
 
   } catch (err) {
