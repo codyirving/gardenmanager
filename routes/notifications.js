@@ -138,10 +138,6 @@ router.delete('/bed/:bedNumber/notifications/:id', jsonParser, (req,res) => {
 
 
 
-
-
-
-
 function intersect(a, b) {
   var t;
   if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter

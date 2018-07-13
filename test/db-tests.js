@@ -1,5 +1,5 @@
 'use strict';
-const { TEST_DATABASE_URL } = require('../config');
+const { TEST_DATABASE_URL, ADMIN_TEST_USER, ADMIN_TEST_PASS } = require('../config');
 const { app, closeServer, runServer } = require('../server');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -91,10 +91,25 @@ describe('test endpoints', function () {
 
 
     describe('GET all information for a bed', function () {
+        //create new user to auth
+        console.log("admin : " + config.ADMIN_TEST_PASS + " user: " + config.ADMIN_TEST_USER);
+        const user = {
+            "username": config.ADMIN_TEST_USER,
+            "password": config.ADMIN_TEST_PASS
+        };
+        const createAuthToken = function (user) {
+            return jwt.sign({ user }, config.JWT_SECRET, {
+                subject: user.username,
+                expiresIn: config.JWT_EXPIRY,
+                algorithm: 'HS256'
+            });
+        };
 
+        const authToken = createAuthToken((user));
         it('should get position information for bed', function () {
             return chai.request(app)
                 .get('/bed/1/')
+                .set('Cookie',`authToken=${authToken}`)
                 .then(function (res) {
                     expect(res).to.have.status(200);
                     expect(res).to.be.json;
@@ -182,16 +197,17 @@ describe('test endpoints', function () {
 
             };
             //create new user to auth
-            const user = {"username":"cody",
-            "password":"1234567890"
+            const user = {
+                "username": config.ADMIN_TEST_USER,
+                "password": config.ADMIN_TEST_PASS
             };
-            const createAuthToken = function(user) {
-                return jwt.sign({user}, config.JWT_SECRET, {
-                  subject: user.username,
-                  expiresIn: config.JWT_EXPIRY,
-                  algorithm: 'HS256'
+            const createAuthToken = function (user) {
+                return jwt.sign({ user }, config.JWT_SECRET, {
+                    subject: user.username,
+                    expiresIn: config.JWT_EXPIRY,
+                    algorithm: 'HS256'
                 });
-              };
+            };
 
             const authToken = createAuthToken((user));
 

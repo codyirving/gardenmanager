@@ -29,11 +29,12 @@
   }
   body {
       line-height: 1;
-      background-color: darkslategray;
+      /* background-color: darkslategray; */
       background: url('/images/pb02.svg');
       background-repeat: no-repeat;
       /* opacity: .4; */
       background-size: cover;
+      background-color:  gray;
   }
   ol, ul {
       list-style: none;
