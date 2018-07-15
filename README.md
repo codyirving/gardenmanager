@@ -24,21 +24,22 @@ NPM
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
 Clone or copy repository to server
 
 ```
 git clone https://github.com/codyirving/gardenmanager.git
 ```
 
-And repeat
-
+Run npm install to install dependencies.
 ```
 npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Run npm start to start application.
+```
+npm start
+```
+
 
 ## Running the tests
 
@@ -46,7 +47,7 @@ npm test
 
 ### Break down into end to end tests
 
-Endpoints tested for accuracy 
+Endpoints tested using mocha/chai 
 
 ```
 Give an example
@@ -66,18 +67,14 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Node](node.js) - The web framework used
-* [Mongo](mongodb) - Dependency Management
-* [Express](express) - Used to generate RSS Feeds
-* [jQuery](jQuery) - 
+* [Node](node.js)
+* [Mongo](mongodb) 
+* [Express](express)
+* [jQuery](jQuery) 
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
@@ -88,9 +85,3 @@ See also the list of [contributors](https://github.com/codyirving/gardenmanager/
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
