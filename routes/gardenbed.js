@@ -14,7 +14,7 @@ router.get('/gardenbed/', function (req, res) {
   Gardenbeds.find({}).then(
     beds => { res.status(200).json(beds); }
   ).catch(err => {
-    console.error(err);
+    //console.error(err);
     res.status(500).json({ message: "Internal server error" });
   });;
 });
@@ -27,26 +27,9 @@ router.get('/gardenbed/:id', function (req, res) {
       res.status(200).json(bed);
 
 
-      //stringify for proper pug parsing
-
-      // let contact = JSON.stringify(bed.contact);
-      // let soilLog = JSON.stringify(bed.soilLog);
-      // let notifications = JSON.stringify(bed.notifications);
-      // console.log("contact parsed: " + contact);
-      // const bedPositions = JSON.stringify(bed.getBedPositions());
-      // res.render(path.resolve('public/views/bed'), {
-      //   bedNumber: `${bed.bedNumber}`,
-      //   owner: `${bed.owner}`,
-      //   length: `${bed.length}`,
-      //   width: `${bed.width}`,
-      //   contact: `${contact}`,
-      //   bedPositions: `${bedPositions}`,
-      //   notifications: `${notifications}`,
-      //   soilLog: `${soilLog}`
-      // });
     }
   ).catch(err => {
-    console.error(err);
+    //console.error(err);
     res.status(500).json({ message: "Internal server error" });
   });;
 });
@@ -61,14 +44,9 @@ router.get('/bed/:id/:position1,:position2', function (req, res) {
 
       res.status(200).json(bedPosition);
 
-
-      // res.render(path.resolve('public/views/position'), {
-      //   bedPosition: bedPosition
-      // }
-      // );
     })
     .catch(err => {
-      console.error(err);
+      //console.error(err);
       res.status(500).json({ message: "Internal server error" });
     });
 });
@@ -79,30 +57,30 @@ router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
 
   const requiredFields = ['startDate', 'occupied', 'plantType', 'harvestDate'];
 
-  console.log("req.body.keys: " + Object.keys(req.body));
+  //console.log("req.body.keys: " + Object.keys(req.body));
   //check req.body for any of required keys
   const intersected = intersect(requiredFields, Object.keys(req.body));
-  console.log("Intersected: " + intersected);
+  //console.log("Intersected: " + intersected);
   //MONGODB $set object
   let jsonSetObject = {};
   for (let i = 0; i < intersected.length; i++) {
     const field = intersected[i];
     //look for passed field to update
-    console.log("if " + field + " in " + req.body);
+    //console.log("if " + field + " in " + req.body);
     if ((field in req.body)) {
       //found at least one
       found = true;
       const setString = "bedPositions." + req.params.pos1 + "." + req.params.pos2 + "." + field;
       //set the key value
       jsonSetObject[setString] = req.body[field];
-      console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
+      //console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
 
     }
   }
   if (!found) {
     //none!
     const message = `Missing \`${requiredFields}\` in request body`;
-    console.error(message);
+    //console.error(message);
     return res.status(400).send(message);
   }
 
@@ -114,20 +92,20 @@ router.post('/bed/:id/:pos1,:pos2', jsonParser, (req, res) => {
 
   ).then(success => {
     if (success) {
-      console.log("SUCCESS: " + success.bedPositions[0][0]);
+      //console.log("SUCCESS: " + success.bedPositions[0][0]);
       return res.status(201).json(success);
     } else {
-      console.log("failed " + success);
+      //console.log("failed " + success);
       return res.status(200).json(error);
     }
   }).catch(error => {
 
     if (error) {
-      console.log("ERROR: " + error);
+      //console.log("ERROR: " + error);
       return res.status(200).json(error);
     }
 
-    console.error(err);
+    //console.error(err);
     res.status(500).json({ message: "Internal server error" });
   });
 
@@ -149,31 +127,31 @@ router.post('/bed/:id/', jsonParser, (req, res) => {
     'dateAcquired'
   ];
 
-  console.log("req.body.keys: " + Object.keys(req.body));
+  //console.log("req.body.keys: " + Object.keys(req.body));
   //check req.body for any of required keys
   const intersected = intersect(requiredFields, Object.keys(req.body));
 
-  console.log("Intersected: " + intersected);
+  //console.log("Intersected: " + intersected);
 
  //MONGODB $set object
  let jsonSetObject = {};
  for (let i = 0; i < intersected.length; i++) {
    const field = intersected[i];
    //look for passed field to update
-   console.log("if " + field + " in " + req.body);
+   //console.log("if " + field + " in " + req.body);
    if ((field in req.body)) {
      //found at least one
      found = true;
      const setString = field;
      //set the key value
      jsonSetObject[setString] = req.body[field];
-     console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
+     //console.log("JSONSETobject: " + JSON.stringify(jsonSetObject));
    }
  }
  if (!found) {
    //none!
    const message = `Missing \`${requiredFields}\` in request body`;
-   console.error(message);
+   //console.error(message);
    return res.status(400).send(message);
  }
 
@@ -184,18 +162,18 @@ router.post('/bed/:id/', jsonParser, (req, res) => {
 
  ).then(success => {
    if (success) {
-     console.log("SUCCESS: " + success.bedPositions[0][0]);
+     //console.log("SUCCESS: " + success.bedPositions[0][0]);
      return res.status(201).json(success);
    } else {
-     console.log("failed " + success);
+     //console.log("failed " + success);
      return res.status(200).json(error);
    }
  }).catch(error => {
    if (error) {
-     console.log("ERROR: " + error);
+     //console.log("ERROR: " + error);
      return res.status(200).json(error);
    }
-   console.error(err);
+   //console.error(err);
    res.status(500).json({ message: "Internal server error" });
  });
 

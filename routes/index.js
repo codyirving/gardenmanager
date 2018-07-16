@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 /* GET position edit page. */
 router.get('/gardener/:id/edit/:posX,:posY', function(req, res, next) {
-  console.log("gettine edit page");
+  //console.log("gettine edit page");
   res.render('edit.html', {bedNumber:req.params.id, posX:req.params.posX, posY:req.params.posY});
 });
 

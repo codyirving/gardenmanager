@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 chai.use(chaiHttp);
 
-console.log("\n\n TEST_DATABASE_URL: " + JSON.stringify(TEST_DATABASE_URL));
+//console.log("\n\n TEST_DATABASE_URL: " + JSON.stringify(TEST_DATABASE_URL));
 
 //seed test db
 let seedData = require('../public/models/db_seed_data');
@@ -92,7 +92,7 @@ describe('test endpoints', function () {
 
     describe('GET all information for a bed', function () {
         //create new user to auth
-        console.log("admin : " + config.ADMIN_TEST_PASS + " user: " + config.ADMIN_TEST_USER);
+        //console.log("admin : " + config.ADMIN_TEST_PASS + " user: " + config.ADMIN_TEST_USER);
         const user = {
             "username": config.ADMIN_TEST_USER,
             "password": config.ADMIN_TEST_PASS
@@ -179,7 +179,7 @@ describe('test endpoints', function () {
                 .post('/bed/1/0,0/')
                 .send(newBedPositionData)
                 .then(function (res) {
-                    console.log("POST update bedposition resp: " + JSON.stringify(res.body));
+                    //console.log("POST update bedposition resp: " + JSON.stringify(res.body));
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
                     //expect(res.body.bedPositions[0][0].occupied).to.be.false;
@@ -217,7 +217,7 @@ describe('test endpoints', function () {
                 .set('Cookie', `authToken=${authToken}`)
                 .send(newBedDetailData)
                 .then(function (res) {
-                    console.log("POST update beddetail resp: " + JSON.stringify(res.body) + "  END #############");
+                    //console.log("POST update beddetail resp: " + JSON.stringify(res.body) + "  END #############");
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
                     //expect(res.body.owner).to.eql("Franklin");

@@ -35,6 +35,11 @@ Run npm install to install dependencies.
 npm install
 ```
 
+Run mongod 
+```
+mongod
+```
+
 Run npm start to start application.
 ```
 npm start
@@ -48,18 +53,6 @@ npm test
 ### Break down into end to end tests
 
 Endpoints tested using mocha/chai 
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
