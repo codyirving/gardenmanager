@@ -38,8 +38,6 @@ app.use(adminRouter);
 
 mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
-
-
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
@@ -48,28 +46,17 @@ app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 
 
-
-
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
-
-// A protected endpoint which needs a valid JWT to access it
-app.get('/api/protected', jwtAuth, (req, res) => {
-  return res.json({
-    data: 'rosebud'
-  });
-});
-
-
 let server;
 
 function runServer(databaseUrl, port = PORT) {
-  
+
   return new Promise((resolve, reject) => {
-    
+
     mongoose.connect(databaseUrl, err => {
       if (err) {
         console.log("error in runserver db connect");
@@ -106,4 +93,4 @@ if (require.main === module) {
   console.log("require.main === module");
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
-module.exports = {app, closeServer, runServer};
+module.exports = { app, closeServer, runServer };

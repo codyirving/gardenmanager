@@ -10,7 +10,7 @@ async function getBedsInformation() {
         );
       },
       crossDomain: true,
-      url: `http://localhost:3001/bed/`,
+      url: `bed/`,
       method: "GET",
       dataType: "json",
       processData: false,
@@ -34,7 +34,7 @@ async function updateBedInformation(bedNumber, data) {
           `Bearer ${document.cookie.authToken}`
         );
       },
-      url: `http://localhost:3001/bed/${bedNumber}`,
+      url: `bed/${bedNumber}`,
       method: "POST",
       dataType: "json",
       data: data
@@ -98,7 +98,7 @@ async function getBedOwners() {
     var settings = {
       async: true,
       crossDomain: true,
-      url: `http://localhost:3001/gardeners/`,
+      url: `gardeners/`,
       method: "GET",
       dataType: "json",
       processData: false,
@@ -119,7 +119,7 @@ async function getBedNotifications(bedNumber) {
     var settings = {
       async: true,
       crossDomain: true,
-      url: `http://localhost:3001/bed/${bedNumber}/notifications/`,
+      url: `bed/${bedNumber}/notifications/`,
       method: "GET",
       dataType: "json",
       processData: false,
@@ -141,7 +141,7 @@ async function getBedNotes(bedNumber) {
     var settings = {
       async: true,
       crossDomain: true,
-      url: `http://localhost:3001/bed/${bedNumber}/notes/`,
+      url: `bed/${bedNumber}/notes/`,
       method: "GET",
       dataType: "json",
       processData: false,
@@ -160,7 +160,7 @@ async function getBedSoilLog(bedNumber) {
     var settings = {
       async: true,
       crossDomain: true,
-      url: `http://localhost:3001/bed/${bedNumber}/soilLog/`,
+      url: `bed/${bedNumber}/soilLog/`,
       method: "GET",
       dataType: "json",
       processData: false,
@@ -199,7 +199,7 @@ function generatePositions(bedNumber) {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3001/bed/${bedNumber}/positions`,
+    url: `bed/${bedNumber}/positions`,
     method: "GET",
     processData: false,
     contentType: false
@@ -239,7 +239,7 @@ function getBedPositions(bedNumber) {
   var settings = {
     async: true,
     crossDomain: true,
-    url: `http://localhost:3001/bedpositions/${bedNumber}`,
+    url: `bedpositions/${bedNumber}`,
     method: "GET",
     processData: false,
     contentType: false
@@ -428,7 +428,7 @@ async function sendBedNotification(bedNumber, data) {
           `Bearer ${document.cookie.authToken}`
         );
       },
-      url: `http://localhost:3001/bed/${bedNumber}/notifications`,
+      url: `bed/${bedNumber}/notifications`,
       method: "POST",
       dataType: "json",
       data: data
@@ -517,7 +517,7 @@ async function getToken(data) {
       crossDomain: true,
       credentials: "include",
       withCredentials: true,
-      url: `http://localhost:3001/api/auth/login`,
+      url: `api/auth/login`,
       headers: headers,
       method: "POST",
       dataType: "json",
@@ -540,7 +540,7 @@ function getPositionInfo(bedNumber, posX, posY) {
           `Bearer ${document.cookie.authToken}`
         );
       },
-      url: `http://localhost:3001/bed/${bedNumber}/${posX},${posY}`,
+      url: `bed/${bedNumber}/${posX},${posY}`,
       method: "GET",
       dataType: "json"
     };
@@ -655,7 +655,7 @@ function updatePositionInformation(bedNumber, data, posX, posY) {
           `Bearer ${document.cookie.authToken}`
         );
       },
-      url: `http://localhost:3001/bed/${bedNumber}/${posX},${posY}`,
+      url: `bed/${bedNumber}/${posX},${posY}`,
       method: "POST",
       dataType: "json",
       data: data
@@ -713,7 +713,7 @@ function deleteNotification(bedNumber, notificationID) {
           `Bearer ${document.cookie.authToken}`
         );
       },
-      url: `http://localhost:3001/bed/${bedNumber}/notifications/${notificationID}`,
+      url: `bed/${bedNumber}/notifications/${notificationID}`,
       method: "DELETE",
       dataType: "json",
     
