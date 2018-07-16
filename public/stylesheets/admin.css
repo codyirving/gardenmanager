@@ -150,7 +150,7 @@ input[type=submit]:hover {
     display: none;
   }
   .notification-rows {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
   }
 
 
@@ -166,7 +166,7 @@ input[type=submit]:hover {
     font-size: 40px;
   }
   .position {
-    background-color: white;
+    background-color: lavender;
   }
   .support-text {
     font-size: 20px;
@@ -207,7 +207,7 @@ input[type=submit]:hover {
     /* padding-left: 20px; */
     /* padding-right: 20px; */
     margin: 0 auto;
-    background-color: gainsboro;
+    background-color: lavender;
     /* height: 24px; */
     /* text-align: center; */
     /* justify-items: right; */

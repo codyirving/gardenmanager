@@ -5451,13 +5451,7 @@
 $( document ).ready(function() {
     for(let i = 0; i < 45; i++) {
 
-    $(`#bed${i}`).hover(function() {
-        console.log(`bed ${i} this: ${this}`);
-        $(this).addClass("hover");
-        },function() {
-            $(this).removeClass("hover");
-        }
-    ).click(function() {
+    $(`#bed${i}`).click(function() {
         window.location.href = `/gardener/${i}`;
     });
 
