@@ -172,10 +172,10 @@ async function getBedSoilLog(bedNumber) {
       messages;
 
       Array.prototype.forEach.call(response.soilLog, soilLog => {
-        message = `<li class="item"> <span class="content">
+        message = `<span class="content">
         <i class="icon">#${++i}</i> ${
           soilLog.action
-          }</span>  </li>`;
+          }</span>`;
         //console.log("message: " + message);
         messages = messages + "\n" + message;
       });
@@ -546,23 +546,23 @@ async function setEditPosition(bedNumber, posX, posY) {
     <div class='row'>
     
     
-    Start Date:<input class="input" type="text" name="startDate" value="${
+    <label for="startDate">Start Date</label><input class="input" type="text" name="startDate" id="startDate" value="${
     moment(positionInfo.startDate)
     }">
     </div><br>
     <div class='row'>
-    Harvest Date:<input class="input" type="text" name="harvestDate" value="${
+    <label for="harvestDate">Harvest Date</label><input class="input" type="text" name="harvestDate" id="harvestDate" value="${
     moment(positionInfo.harvestDate)
     }">
     </div><br>
-    <div class='row'>
-    Occupied:<input class="radio-button" type="radio" id="true" name="occupied" value="true"><label for="true">TRUE</label><input class="radio-button" type="radio" id="false" name="occupied" value="false"><label for="false">FALSE</label>
+    <div class='row' role="radiogroup" >
+    Occupied:<input class="radio-button" type="radio" id="true" name="occupied" value="true" role="radio"><label for="true">TRUE</label><input class="radio-button" type="radio" id="false"  name="occupied" value="false" role="radio"><label for="false">FALSE</label>
     </div>
     </div>
 
   <div class='col-6 support-text'>
     <div class='row common-name'>
-    Plant:<input class="input" type="text" name="plantType.commonName" value="${
+    <label for="plantType">Plant Type</label><input class="input" type="text" name="plantType.commonName" id="plantType" value="${
     positionInfo.plantType.commonName
     }">
     </div>
@@ -661,7 +661,7 @@ async function setEditNotifications(bedNumber) {
           <div class='row notification-rows'>
           <div class='notification-message col-4'> ${notification.message} </div>
           <div class='notification-date col-4'>${formattedDate}</div>
-          <div class='col-4'><input type='submit' class='notification-delete-button' value='Delete' id='${notification._id}'></input></div>
+          <div class='col-4'><input type='submit' class='notification-delete-button' value='Delete' id='${notification._id}'><label for="${notification._id}">Delete</label>/div>
           </div>
           `);
     $('.notification-id').addClass('hidden');

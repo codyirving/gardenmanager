@@ -16,11 +16,11 @@
 <body>
 
     <div class="bedNumber" id="<%= bedNumber %>">Bed <%= bedNumber %></div>
-    <div class="row notifications-list">
+    <div class="row notifications-list" role='main'>
        
     </div>
 <div class="row">
-    <div class="col-12 notifications-textbox">
+    <div class="col-12 notifications-textbox" role='main'>
         <form action="javascript:sendNotification(`<%= bedNumber %>`)" method="post" id="notification-form">
         <input type="text" name="message" id="notification">
         <input type="submit" name="submit" value="Send">

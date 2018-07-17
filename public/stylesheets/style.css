@@ -223,6 +223,7 @@ a {
 
 .unoccupied {
   background-color: #615443;
+  color:wheat;
 }
 .support-text {
   font-family: 'Alegreya Sans', sans-serif;
