@@ -62,7 +62,7 @@ router.get('/admin/dashboard/', function (req, res, next) {
     //console.log("TOKEN from cookie: " + token);
     try{
         let decoded = jwt.verify(token, JWT_SECRET);
-        console.log("Decoded token:  " + JSON.stringify(decoded));
+
         res.render('admin.html');
     }catch (err) {
         res.render('login.html');

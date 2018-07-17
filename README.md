@@ -18,7 +18,7 @@ Password: 1234567890
 
 ## Getting Started
 
-Clone repository, npm install, set admin password, populate database. Optional: add image of garden and map beds to endpoints.
+Clone repository, npm install, set admin password and populate database (through CLI or using Robo3T). Optional: add image of garden and map beds to endpoints.
 
 ### Prerequisites
 
@@ -51,18 +51,19 @@ Run npm start to start application.
 npm start
 ```
 
-
 ## Running the tests
 
+```
 npm test
-
+```
 ### Break down into end to end tests
 
 Endpoints tested using mocha/chai 
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+If deploying site publicly it is recommended to use a certificate to enable https.
+Demo deployed with https://letsencrypt.org/ CA.
 
 ## Built With
 
@@ -70,10 +71,6 @@ Add additional notes about how to deploy this on a live system
 * [Mongo](mongodb) 
 * [Express](express)
 * [jQuery](jQuery) 
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 

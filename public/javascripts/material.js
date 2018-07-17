@@ -1,6 +1,6 @@
 ;(function() {
 "use strict";
-console.log("HERE WE GO!");
+
 /**
  * @license
  * Copyright 2015 Google Inc. All Rights Reserved.

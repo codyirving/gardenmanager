@@ -41,11 +41,11 @@ async function updateBedInformation(bedNumber, data) {
     };
 
     $.ajax(settings).done(function (data, textStatus, jqXHR) {
-      console.log(jqXHR.statusText);
+      //console.log(jqXHR.statusText);
       alert("Bed Updated.");
       resolve(textStatus);
     }).fail(function () {
-      console.log("FAILED");
+      //console.log("FAILED");
       alert("Update Failed");
       window.location.reload();
     });
@@ -77,7 +77,7 @@ async function generateBeds() {
         $("body").append(`<div class=\'row rowpadding row${++row}\'>`);
     }
   } catch (error) {
-    console.log("generate beds error: " + error);
+    //console.log("generate beds error: " + error);
     return null;
   }
 }
@@ -86,7 +86,7 @@ let ownerList = null;
 
 async function getBedOwner(i) {
   if (ownerList === null) ownerList = await getBedOwners();
-  console.log("Owner: " + ownerList);
+  //console.log("Owner: " + ownerList);
   return new Promise(function (resolve, reject) {
     if (ownerList != null) resolve(ownerList[i - 1].owner);
     else reject(Error("reejected"));
@@ -106,7 +106,7 @@ async function getBedOwners() {
     };
     let ownerList = "";
     $.ajax(settings).done(response => {
-      console.log("response typeof: " + typeof response);
+      //console.log("response typeof: " + typeof response);
       ownerList = response;
       if (ownerList != undefined) resolve(ownerList);
       else reject(Error("reejected"));
@@ -128,7 +128,7 @@ async function getBedNotifications(bedNumber) {
     let messages = "";
     $.ajax(settings).done(response => {
       messages;
-      console.log("RESPONSE!: " + JSON.stringify(response.notifications));
+      //console.log("RESPONSE!: " + JSON.stringify(response.notifications));
       resolve(response.notifications);
  
 
@@ -176,20 +176,11 @@ async function getBedSoilLog(bedNumber) {
         <i class="icon">#${++i}</i> ${
           soilLog.action
           }</span>  </li>`;
-        console.log("message: " + message);
+        //console.log("message: " + message);
         messages = messages + "\n" + message;
       });
-      console.log(
-        "typeofMessagesTotal: " +
-        typeof messages +
-        "  messages total: " +
-        messages
-      );
-      console.log("resolving: " + messages);
-      // messages = messages +
-      //   `<button class="button">
-      //   <i class="material-icons">add</i>
-      //   </button>`;
+
+
       resolve(messages);
     });
   });
@@ -206,13 +197,13 @@ function generatePositions(bedNumber) {
   };
   $.ajax(settings).done(function (response) {
     let htmlResponse = "";
-    console.log("response typeof: " + typeof response);
+    //console.log("response typeof: " + typeof response);
 
     //Iterate through matrix array of bed positions by row
     Array.prototype.forEach.call(response, (row, index1) => {
-      console.log("index: " + index1);
-      console.log("notification: " + JSON.stringify(row));
-      console.log("notification typeof: " + typeof row);
+      //console.log("index: " + index1);
+      //console.log("notification: " + JSON.stringify(row));
+      //console.log("notification typeof: " + typeof row);
       //Iterate through matrix array of bed positions by column/position
       Array.prototype.forEach.call(row, (position, index2) => {
         htmlResponse += `<div class='${
@@ -228,8 +219,8 @@ function generatePositions(bedNumber) {
         
           </div>`;
       });
-      console.log("htmlResponse: " + htmlResponse);
-      console.log(response);
+      //console.log("htmlResponse: " + htmlResponse);
+      //console.log(response);
     });
     //$("body").html("<div class='row'></div>");
     $(".row1").html(htmlResponse);
@@ -245,14 +236,14 @@ function getBedPositions(bedNumber) {
     contentType: false
   };
   $.ajax(settings).done(function (response) {
-    console.log("getBedPositions response: " + response);
+    //console.log("getBedPositions response: " + response);
     return response;
   });
 }
 
 async function setOwner(bedNumber) {
   const owner = await getBedOwner(bedNumber);
-  console.log("owner: " + owner);
+  //console.log("owner: " + owner);
   $(".owner").text(owner);
 }
 async function setNotifications(bedNumber) {
@@ -299,9 +290,9 @@ async function setSoilLog(bedNumber) {
 async function setAdminEditor() {
   const fullList = await getBedsInformation();
   let html = "";
-  console.log(fullList);
+  //console.log(fullList);
   fullList.forEach(bed => {
-    console.log("FOREACH:" + bed);
+    //console.log("FOREACH:" + bed);
     html =
       html +
       ` <form class="row" id="updateform-${
@@ -383,7 +374,7 @@ async function setAdminEditor() {
       <br>
       `;
   });
-  console.log("HTML: " + html);
+  //console.log("HTML: " + html);
   $("body").html(html);
 }
 
@@ -408,17 +399,17 @@ async function sendNotification(bedNumber) {
   //let message = form.get("notification");
   const submitJSON = {};
   for (var pair of form.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
+    //console.log(pair[0] + ", " + pair[1]);
     submitJSON[pair[0]] = pair[1];
   }
   let response = await sendBedNotification(bedNumber, submitJSON);
-  console.log(response);
+  //console.log(response);
 }
 
 
 async function sendBedNotification(bedNumber, data) {
-  console.log("Data:" + JSON.stringify(data));
-  console.log("authToken: " + document.cookie.authToken);
+  //console.log("Data:" + JSON.stringify(data));
+  //console.log("authToken: " + document.cookie.authToken);
   return new Promise(function (resolve, reject) {
     var settings = {
       async: true,
@@ -435,12 +426,12 @@ async function sendBedNotification(bedNumber, data) {
     };
 
     $.ajax(settings).done(function (data, textStatus, jqXHR) {
-      console.log(jqXHR.statusText);
+      //console.log(jqXHR.statusText);
       alert(JSON.stringify(jqXHR.statusText));
       resolve(textStatus);
       window.location.reload();
     }).fail(function () {
-      console.log("FAILED");
+      //console.log("FAILED");
       alert("Update Failed");
     });
   });
@@ -454,7 +445,7 @@ async function sendBedNotification(bedNumber, data) {
 
 
 async function updateDB(bedNumber) {
-  console.log("bed:" + bedNumber);
+  //console.log("bed:" + bedNumber);
   //const formID = `#updateform-${bedNumber}`;
   //const formdata = $(formID).serializeArray();
 
@@ -464,13 +455,13 @@ async function updateDB(bedNumber) {
   const submitJSON = {};
 
   for (var pair of form.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
+    //console.log(pair[0] + ", " + pair[1]);
     submitJSON[pair[0]] = pair[1];
   }
 
   let response = await updateBedInformation(bedNumber, submitJSON);
 
-  console.log(response);
+  //console.log(response);
 
 }
 
@@ -481,18 +472,18 @@ async function login() {
   const submitJSON = {};
 
   for (var pair of formData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
+    //console.log(pair[0] + ", " + pair[1]);
     submitJSON[pair[0]] = pair[1];
   }
   //sets cookie
   const token = await getToken(submitJSON);
-  console.log("TOKEN: " + token);
+  //console.log("TOKEN: " + token);
   window.location.href = "/admin/dashboard/";
 }
 
 
 async function getToken(data) {
-  console.log("Data:" + JSON.stringify(data));
+  //console.log("Data:" + JSON.stringify(data));
   return new Promise(function (resolve, reject) {
     var headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -512,7 +503,7 @@ async function getToken(data) {
     };
 
     $.ajax(settings).done(response => {
-      
+
       resolve(response);
     });
   });
@@ -534,7 +525,7 @@ function getPositionInfo(bedNumber, posX, posY) {
     };
 
     $.ajax(settings).done(response => {
-      console.log("GET POSITION response: " + response);
+      //console.log("GET POSITION response: " + response);
       resolve(response);
     });
   });
@@ -542,7 +533,7 @@ function getPositionInfo(bedNumber, posX, posY) {
 
 async function setEditPosition(bedNumber, posX, posY) {
   const positionInfo = await getPositionInfo(bedNumber, posX, posY);
-  console.log("pos info " + positionInfo);
+  //console.log("pos info " + positionInfo);
 
   let html = ` <form class="row" id="editposition-${bedNumber}" action="javascript:updatePOS(${bedNumber},${posX},${posY})">
   <div class="col-12">
@@ -593,7 +584,7 @@ async function setEditPosition(bedNumber, posX, posY) {
   if (positionInfo.occupied === true) {
     $("#true").prop("checked", true);
   } else $("#false").prop("checked", true);
-  console.log("URLS LENGTH: " + positionInfo.plantType.imgURLs.length);
+  //console.log("URLS LENGTH: " + positionInfo.plantType.imgURLs.length);
   if (positionInfo.plantType.imgURLs.length === 0)
     $(".image-urls").append(`<input type='text' name='imageURL-0' value=''>`);
   for (const i = 0; i < positionInfo.plantType.imgURLs.length; i++) {
@@ -606,18 +597,18 @@ async function setEditPosition(bedNumber, posX, posY) {
 }
 
 async function updatePOS(bedNumber, posX, posY) {
-  console.log("bed:" + bedNumber);
+  //console.log("bed:" + bedNumber);
 
   //const formID = `#editposition-${bedNumber}`;
   //const formdata = $(formID).serializeArray();
 
   var form = new FormData(document.getElementById("editposition-" + bedNumber));
   var inputValue = form.get("owner");
-  console.log("inputValue" + inputValue);
+  //console.log("inputValue" + inputValue);
   const submitJSON = {};
 
   for (var pair of form.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
+    //console.log(pair[0] + ", " + pair[1]);
     submitJSON[pair[0]] = pair[1];
   }
 
@@ -628,12 +619,12 @@ async function updatePOS(bedNumber, posX, posY) {
     posY
   );
 
-  console.log(response);
+  //console.log(response);
 }
 
 function updatePositionInformation(bedNumber, data, posX, posY) {
-  console.log("Data:" + JSON.stringify(data));
-  console.log("authToken: " + document.cookie.authToken);
+  //console.log("Data:" + JSON.stringify(data));
+  //console.log("authToken: " + document.cookie.authToken);
   return new Promise(function (resolve, reject) {
     var settings = {
       async: true,
@@ -651,7 +642,7 @@ function updatePositionInformation(bedNumber, data, posX, posY) {
 
     $.ajax(settings).done(function (data, textStatus, jqXHR) {
       alert(textStatus);
-      console.log("response: " + textStatus);
+      //console.log("response: " + textStatus);
       resolve(textStatus);
     });
   });
@@ -677,11 +668,11 @@ async function setEditNotifications(bedNumber) {
   });
   $('body').append(`<script>$(".notification-delete-button").click(async function() {
 
-    console.log("HI im deleting: " + $('.bedNumber').attr('id'));
-    console.log("this: " + JSON.stringify($(this).attr('id')));
+    //console.log("HI im deleting: " + $('.bedNumber').attr('id'));
+    //console.log("this: " + JSON.stringify($(this).attr('id')));
     //alert($(this).attr('id'));
     let response = await deleteNotification($('.bedNumber').attr('id'),$(this).attr('id'));
-    console.log("response?: " + response);
+    //console.log("response?: " + response);
 
     }
   );</script>`);
@@ -708,7 +699,7 @@ function deleteNotification(bedNumber, notificationID) {
     };
 
     $.ajax(settings).done(function (data, textStatus, jqXHR) {
-      console.log("response: " + textStatus);
+      //console.log("response: " + textStatus);
       alert(textStatus);
       
       resolve(textStatus);

@@ -55,7 +55,7 @@
   
   body {
     font-size: 14px;
-    font-family: 'Gaegu', cursive;
+    font-family: 'Alegreya Sans', sans-serif;
   }
   
   a {
@@ -163,7 +163,7 @@ input[type=submit]:hover {
   }
   .title-text {
     font-size: 40px;
-    font-family: 'Reenie Beanie', cursive;
+  
   }
   .position {
     background-color: lavender;

@@ -86,7 +86,7 @@ gardenbedsSchema.methods.getOwner = function () {
     };
 };
 
-console.log("model.js creating GardenManager");
+
 
 
 const Gardenbeds = mongoose.model('gardenbeds', gardenbedsSchema);
