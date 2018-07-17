@@ -1,6 +1,6 @@
 # Garden Manager
 
-Node.js/MongoDB app for managing garden and gardeners information, with multiple beds.
+Node.js/MongoDB app for managing garden, and gardener's information.  Suited well for community gardens and other multi-bed systems.
 
 LIVE DEMO: [https://garden.codyi.mobi](https://garden.codyi.mobi "Demo")
 
@@ -22,11 +22,8 @@ Clone repository, npm install, set admin password and populate database (through
 
 ### Prerequisites
 
-NPM
+Node.js NPM MongoDB
 
-```
-NPM
-```
 
 ### Installing
 
