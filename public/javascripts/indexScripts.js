@@ -535,7 +535,7 @@ async function setEditPosition(bedNumber, posX, posY) {
   const positionInfo = await getPositionInfo(bedNumber, posX, posY);
   //console.log("pos info " + positionInfo);
 
-  let html = ` <form class="row" id="editposition-${bedNumber}" action="javascript:updatePOS(${bedNumber},${posX},${posY})">
+  let html = ` <form class="row" id="editposition-${bedNumber}"  >
   <div class="col-12">
   <div class="title">
   <h2 class="title-text">Bed #${bedNumber} </h2>
@@ -572,13 +572,14 @@ async function setEditPosition(bedNumber, posX, posY) {
     </div>
     </div>
     
-    <div class='col-12 update-button'><input class="submit-button" type="submit" name="submit" value="Update"></div>
+    <div class='col-12 update-button'><input class="submit-button" id="submit-button" type="submit" name="submit" value="Update"></div>
     <br>
     </div>
     </div>
     </form>
     <br>
     `;
+
 
   $(".position").html(html);
   if (positionInfo.occupied === true) {
@@ -594,10 +595,16 @@ async function setEditPosition(bedNumber, posX, posY) {
       }'`
     );
   }
+
+  $("#submit-button").on("click", function(e) {
+   
+    e.preventDefault();
+    updatePOS(bedNumber,posX,posY);
+  });
 }
 
 async function updatePOS(bedNumber, posX, posY) {
-  //console.log("bed:" + bedNumber);
+  console.log("bed:" + bedNumber);
 
   //const formID = `#editposition-${bedNumber}`;
   //const formdata = $(formID).serializeArray();
@@ -618,8 +625,8 @@ async function updatePOS(bedNumber, posX, posY) {
     posX,
     posY
   );
+  alert(response);
 
-  //console.log(response);
 }
 
 function updatePositionInformation(bedNumber, data, posX, posY) {
@@ -628,12 +635,7 @@ function updatePositionInformation(bedNumber, data, posX, posY) {
   return new Promise(function (resolve, reject) {
     var settings = {
       async: true,
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader(
-          "Authorization",
-          `Bearer ${document.cookie.authToken}`
-        );
-      },
+      
       url: `/bed/${bedNumber}/${posX},${posY}`,
       method: "POST",
       dataType: "json",
@@ -641,7 +643,7 @@ function updatePositionInformation(bedNumber, data, posX, posY) {
     };
 
     $.ajax(settings).done(function (data, textStatus, jqXHR) {
-      alert(textStatus);
+      //alert(textStatus);
       //console.log("response: " + textStatus);
       resolve(textStatus);
     });
