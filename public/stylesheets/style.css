@@ -50,9 +50,10 @@ table {
 body {
   font-size: 18px;
   font-family: 'Indie Flower', cursive;
-  background: url('/images/pb02.svg');
+  background: url('/images/garden_north_corner_transparent.svg');
   background-repeat: no-repeat;
   /* opacity: .4; */
+  background-color:  #97B0D7;
   background-size: cover;
 }
 

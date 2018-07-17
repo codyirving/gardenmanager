@@ -30,11 +30,11 @@
   body {
       line-height: 1;
       /* background-color: darkslategray; */
-      background: url('/images/pb02.svg');
+      background: url('/images/garden_north_corner_transparent.svg');
       background-repeat: no-repeat;
       /* opacity: .4; */
       background-size: cover;
-      background-color:  gray;
+      background-color: #7991B6;
   }
   ol, ul {
       list-style: none;

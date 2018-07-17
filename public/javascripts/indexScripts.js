@@ -490,19 +490,6 @@ async function login() {
   window.location.href = "/admin/dashboard/";
 }
 
-function loadAdmin(token) {
-  $.ajax({
-    url: "/admin/dashboard",
-    type: "GET",
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-    },
-    data: {},
-    error: function () { }
-  }).done(response => {
-    jQuery("body").html(response);
-  });
-}
 
 async function getToken(data) {
   console.log("Data:" + JSON.stringify(data));
@@ -525,6 +512,7 @@ async function getToken(data) {
     };
 
     $.ajax(settings).done(response => {
+      
       resolve(response);
     });
   });
