@@ -61,6 +61,113 @@ a {
   color: #00B7FF;
 }
 
+
+
+/*********************/
+/* START GRID SYSTEM */
+/*********************/
+
+.row {
+  max-width: 1000px;
+  /* padding-left: 20px; */
+  /* padding-right: 20px; */
+  margin: 0 auto;
+  /* height: 61px; */
+}
+/* Clearfix */
+.row::before,
+.row::after {
+  display: table;
+  content: "";
+}
+.row::after {
+  clear: both;
+}
+.col-2point4,
+.col-3,
+.col-4,
+.col-6,
+.col-12 {
+  float: left;
+  /* Gutters:
+   * Each column is padded by half-a-gutter on each side,
+   *
+   * Half a gutter is 10px, 10/960 (context) = 1.041666%
+   *
+   */
+  /* padding-left: 1.04166666%; */
+  /* padding-right: 1.04166666%; */
+}
+/* Mobile defaults */
+.col-2point4,
+.col-3,
+.col-4,
+.col-6,
+.col-12 {
+  width: 100%;
+}
+
+/* small-mobile, grid */
+@media only screen and (min-width: 640px) {
+  /* 3 columns, 3/12 in % */
+  .col-2point4 {
+    width: 19.5%;
+    height: 90px;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  /* 4 columns */
+  .col-4 {
+    width: 33.33%;
+  }
+  /* 6 columns */
+  .col-6 {
+    width: 50%;
+  }
+  /* 12 columns */
+  .col-12 {
+    width: 100%;
+  }
+}
+
+
+/* Non-mobile, grid */
+@media only screen and (min-width: 1000px) {
+  /* 3 columns, 3/12 in % */
+  .col-2point4 {
+    width: 9.79%;
+    height: 90px;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  /* 4 columns */
+  .col-4 {
+    width: 33.33%;
+  }
+  /* 6 columns */
+  .col-6 {
+    width: 50%;
+  }
+  /* 12 columns */
+  .col-12 {
+    width: 100%;
+  }
+}
+/*******************/
+/* END GRID SYSTEM */
+/*******************/
+
+
+
+
+
+
+
+
+
+
 .plant-position {
   /* text-align: center; */
   /* height: 100px; */
@@ -83,7 +190,7 @@ a {
 
 
 .owner-row {
-  height: 40px;
+  /* height: 40px; */
   background-color: rgba(0, 0, 0, 0.3);
   opacity: 10%;
   text-align: center;
@@ -132,6 +239,8 @@ a {
 .row1 {
   background-color: #615443;
   /* padding: 25px; */
+  max-width: 1000px;
+  /* min-width: 545px; */
 }
 
 .rowpadding {
@@ -143,7 +252,7 @@ a {
 /*********************/
 
 .row {
-  max-width: 1000px;
+  /* max-width: 1000px; */
   /* padding-left: 20px; */
   /* padding-right: 20px; */
   margin: 0 auto;

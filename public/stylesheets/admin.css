@@ -29,7 +29,7 @@
   }
   body {
       line-height: 1;
-      /* background-color: darkslategray; */
+
       background: url('/images/garden_north_corner_transparent.svg');
       background-repeat: no-repeat;
       /* opacity: .4; */
@@ -163,6 +163,7 @@ input[type=submit]:hover {
   }
   .title-text {
     font-size: 40px;
+    font-family: 'Indie Flower', cursive;
   }
   .position {
     background-color: lavender;
