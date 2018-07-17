@@ -2,12 +2,15 @@
 
 Node.js/MongoDB app for managing garden and gardeners information, with multiple beds.
 
+See a live demo at [https://garden.codyi.mobi] (https://garden.codyi.mobi)
+Live admin dashboard at [https://garden.codyi.mobi/admin/dashboard] (https://garden.codyi.mobi/admin/dashboard) 
+Testing credentials:
+Username: cody
+Password: 1234567890
+
 ![Screenshot](https://i.imgur.com/Q0cuMtR.png "Screenshot")
 ![Screenshot](https://i.imgur.com/jihNheZ.png "Screenshot")
 ![Screenshot](https://i.imgur.com/QOK4Src.png "Screenshot")
-
-
-
 
 
 ## Getting Started
