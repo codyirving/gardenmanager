@@ -663,7 +663,7 @@ async function setEditNotifications(bedNumber) {
           <div class='row notification-rows'>
           <div class='notification-message col-4'> ${notification.message} </div>
           <div class='notification-date col-4'>${formattedDate}</div>
-          <div class='col-4'><input type='submit' class='notification-delete-button' value='Delete' id='${notification._id}'><label for="${notification._id}">Delete</label>/div>
+          <div class='col-4'><input type='submit' class='notification-delete-button' value='Delete' id='${notification._id}'><label for="${notification._id}">Delete</label></div>
           </div>
           `);
     $('.notification-id').addClass('hidden');
