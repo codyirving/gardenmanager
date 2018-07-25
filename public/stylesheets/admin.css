@@ -61,7 +61,15 @@
   a {
     color: #00B7FF;
   }
-  
+  .nav {
+    background: white;
+    font-size: 30px;
+    font-family: 'Alegreya Sans', sans-serif;
+   
+  }
+  .nav a {
+    text-decoration: none;
+  }
   .plant-position {
     text-align: center;
     height: 100px;

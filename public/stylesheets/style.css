@@ -188,7 +188,15 @@ a {
   text-align:  center;
 }
 
-
+.nav {
+  background: white;
+  font-size: 30px;
+  font-family: 'Alegreya Sans', sans-serif;
+ 
+}
+.nav a {
+  text-decoration: none;
+}
 .owner-row {
   /* height: 40px; */
   background-color: rgba(0, 0, 0, 0.3);

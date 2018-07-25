@@ -375,7 +375,7 @@ async function setAdminEditor() {
       `;
   });
   //console.log("HTML: " + html);
-  $("body").html(html);
+  $("body").append(html);
 }
 
 function viewBed(bedNumber) {

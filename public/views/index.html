@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Welcome</title>
+    
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
     <script src="/javascripts/indexScripts.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/stylesheets/home.css">
 </head>
 
 
 <body role="main">
 
-    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="svg-image row"> 
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
        xmlns:cc="http://creativecommons.org/ns#"
@@ -5444,25 +5449,38 @@
        transform="matrix(0.67731206,0.73569585,-0.73569585,0.67731206,0,0)">Community Garden</text>
     </svg>
 
+</div>
 
+<div class="dialog" title="Welcome!">
+    <p>Welcome! Click on a bed to view it's details!</p>
+</div>
 </body>
 
 
 <script>
 
 $( document ).ready(function() {
-    for(let i = 0; i < 45; i++) {
-
-    $(`#bed${i}`).click(function() {
-        window.location.href = `/gardener/${i}`;
-    });
-
-
-    }
-
   
+    
+    $('.dialog').dialog({
+      modal: true,
+      buttons: {
+        Ok: function() {
+          $( this ).dialog( "close" );
+          for(let i = 0; i < 45; i++) {
+          $(`#bed${i}`).fadeOut("slow").delay(Math.floor(Math.random() * 600) + 1).fadeIn("slow");
+          }
+        }
+      }
+    });
+          for(let i = 0; i < 45; i++) {
+            
+            $(`#bed${i}`).click(function() {
+                window.location.href = `/gardener/${i}`;
+            });       
+          }
 
-});
+    });
 
 </script>
 </html>

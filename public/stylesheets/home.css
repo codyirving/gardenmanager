@@ -25,8 +25,18 @@ svg { position:fixed; top:0; left:0; height:100%; width:100% }
   border: 2px solid red;
 }
 
-
-
+.navbar {
+  background-color: #9A9599;
+  font-family: 'Alegreya Sans', sans-serif;
+  background-color: white;
+  font-size: 30px;
+  /* position: static; */
+  /* width: 100%; */
+  /* z-index:  100; */
+}
+.svg-image {
+  
+}
 /*********************/
 /* START GRID SYSTEM */
 /*********************/
@@ -36,6 +46,7 @@ svg { position:fixed; top:0; left:0; height:100%; width:100% }
     padding-left: 20px;
     padding-right: 20px;
     margin: 0 auto;
+    /* position: relative; */
   }
   /* Clearfix */
   .row::before,
