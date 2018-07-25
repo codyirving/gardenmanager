@@ -15,6 +15,7 @@
     "dotenv": "^5.0.1",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
+    "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
     "mongodb": "^3.1.1",
